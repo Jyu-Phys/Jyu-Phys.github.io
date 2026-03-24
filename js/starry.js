@@ -1,12 +1,50 @@
 // ==========================================
+// 1. 鼠标点击特效：量子星尘爆炸（大范围版）
+// ==========================================
+document.addEventListener('mousedown', function(e) {
+    const colors = ['#ffffff', '#87CEFA', '#00FFFF', '#DDA0DD'];
+    const particleCount = 15; 
+
+    for(let i = 0; i < particleCount; i++) {
+        let particle = document.createElement('div');
+        let size = Math.random() * 7 + 5; 
+
+        particle.style.position = 'fixed';
+        particle.style.left = e.clientX + 'px';
+        particle.style.top = e.clientY + 'px';
+        particle.style.width = size + 'px';   
+        particle.style.height = size + 'px';  
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.borderRadius = '50%';
+        particle.style.pointerEvents = 'none'; 
+        particle.style.boxShadow = `0 0 15px 4px ${particle.style.background}`; 
+        particle.style.zIndex = '99999';
+        // 🌟 修改点 1：把扩散时间从 0.8s 延长到 1.2s，让大范围扩散更优雅
+        particle.style.transition = 'all 1.2s cubic-bezier(0.1, 0.8, 0.3, 1)'; 
+        document.body.appendChild(particle);
+
+        setTimeout(() => {
+            let angle = Math.random() * 2 * Math.PI;
+            // 🌟 修改点 2：半径整整扩大一倍！原来是(40~140)，现在是(80~280)
+            let radius = Math.random() * 200 + 80; 
+            particle.style.transform = `translate(${Math.cos(angle)*radius}px, ${Math.sin(angle)*radius}px) scale(0)`;
+            particle.style.opacity = '0';
+        }, 10); 
+
+        // 🌟 修改点 3：配合动画时间，清理内存的延迟也同步加长到 1200ms
+        setTimeout(() => particle.remove(), 1200);
+    }
+});
+
+// ==========================================
 // 2. 全局背景特效：纯白极简线段流星
 // ==========================================
 const style = document.createElement('style');
 style.innerHTML = `
 .meteor {
     position: fixed;
-    width: 100px; /* 线段长度，100px 显得精干凌厉 */
-    height: 1.5px; /* 极细的实心线 */
+    width: 100px;
+    height: 1.5px;
     pointer-events: none;
     z-index: 0;
 }
@@ -19,7 +57,7 @@ function createMeteor() {
     
     let isLeftToRight = Math.random() > 0.5;
     let startY = Math.random() * window.innerHeight * 0.7;
-    let duration = Math.random() * 3000 + 3000; // 速度稍微加快一点点，3~6秒
+    let duration = Math.random() * 3000 + 3000; 
     
     let startX, endX, angle;
     
@@ -27,15 +65,12 @@ function createMeteor() {
         startX = -200; 
         endX = window.innerWidth + 200;
         angle = Math.random() * 15 + 10; 
-        // 头部（右侧）纯白，尾部（左侧）完全透明拉丝
         meteor.style.background = 'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)';
-        // 仅在最前端加微弱白光，模拟刺破空气的质感
         meteor.style.boxShadow = '2px 0 3px rgba(255, 255, 255, 0.8)'; 
     } else {
         startX = window.innerWidth + 200; 
         endX = -200;
         angle = - (Math.random() * 15 + 10); 
-        // 头部（左侧）纯白，尾部（右侧）完全透明拉丝
         meteor.style.background = 'linear-gradient(to left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)';
         meteor.style.boxShadow = '-2px 0 3px rgba(255, 255, 255, 0.8)';
     }
@@ -58,7 +93,6 @@ function createMeteor() {
     }, duration + 200);
 }
 
-// 每 5 秒判定一次，每次出 1~3 根纯白线段，保持克制的美感
 setInterval(() => {
     let count = Math.floor(Math.random() * 3) + 1; 
     for(let i = 0; i < count; i++) {
