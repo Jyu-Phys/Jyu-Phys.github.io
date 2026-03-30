@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比 | Jyu's cosmos</title><meta name="author" content="Jyu"><meta name="copyright" content="Jyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比论文：Vampa G, McDonald C R, Orlando G, et al. Semiclassical analysis of high-harmonic generation in bulk crystals [J]. Physical Review B, 2015, 91(6): 064302. 目标：F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比">
+<meta property="og:url" content="https://jyu-phys.github.io/2026/03/30/2026-03-30-vampa-fig2-standard/index.html">
+<meta property="og:site_name" content="Jyu&#39;s cosmos">
+<meta property="og:description" content="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比论文：Vampa G, McDonald C R, Orlando G, et al. Semiclassical analysis of high-harmonic generation in bulk crystals [J]. Physical Review B, 2015, 91(6): 064302. 目标：F">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jyu-phys.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-03-30T04:30:00.000Z">
+<meta property="article:modified_time" content="2026-03-30T04:29:33.979Z">
+<meta property="article:author" content="Jyu">
+<meta property="article:tag" content="高次谐波">
+<meta property="article:tag" content="体晶 HHG">
+<meta property="article:tag" content="半导体 Bloch 方程">
+<meta property="article:tag" content="ZnO">
+<meta property="article:tag" content="能带结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jyu-phys.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比",
+  "url": "https://jyu-phys.github.io/2026/03/30/2026-03-30-vampa-fig2-standard/",
+  "image": "https://jyu-phys.github.io/img/avatar.jpg",
+  "datePublished": "2026-03-30T04:30:00.000Z",
+  "dateModified": "2026-03-30T04:29:33.979Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jyu",
+      "url": "https://Jyu-Phys.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jyu-phys.github.io/2026/03/30/2026-03-30-vampa-fig2-standard/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/bg.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jyu's cosmos</span></a><a class="nav-page-title" href="/"><span class="site-name">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-30T04:30:00.000Z" title="发表于 2026-03-30 12:30:00">2026-03-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-30T04:29:33.979Z" title="更新于 2026-03-30 12:29:33">2026-03-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%BA%E5%9C%BA%E7%89%A9%E7%90%86/">强场物理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="【论文复现】Vampa-PRB-体晶-HHG-Fig-2：带间与带内谐波的对比"><a href="#【论文复现】Vampa-PRB-体晶-HHG-Fig-2：带间与带内谐波的对比" class="headerlink" title="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比"></a>【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</h1><p><strong>论文</strong>：Vampa G, McDonald C R, Orlando G, et al. <em>Semiclassical analysis of high-harmonic generation in bulk crystals</em> [J]. Physical Review B, 2015, 91(6): 064302.</p>
+<p><strong>目标</strong>：Fig. 2 — ZnO 体晶中带间（interband）与带内（intraband）HHG 谱的对比分析</p>
+<p><strong>核心问题</strong>：在中红外驱动场下，ZnO 体晶的 HHG 信号主要由哪种机制产生？</p>
+<hr>
+<h2 id="1-物理背景：为什么比较带间与带内？"><a href="#1-物理背景：为什么比较带间与带内？" class="headerlink" title="1. 物理背景：为什么比较带间与带内？"></a>1. 物理背景：为什么比较带间与带内？</h2><p>在原子 HHG 中，物理图像非常清晰：电子隧穿电离 $\rightarrow$ 在激光场中加速 $\rightarrow$ 返回母离子并复合发光。整个过程是真空中的单电子动力学。</p>
+<p>固体中情况更为复杂。电子不是自由粒子，而是被周期势场约束在能带中。当光场驱动固体时，存在两种基本的高次谐波产生机制：</p>
+<ul>
+<li><strong>带间 HHG（interband）</strong>：电子从价带隧穿到导带，形成电子-空穴对；这对”粒子-空穴”在光场中反向加速，最终复合并发光——与原子 HHG 的物理图像一一对应</li>
+<li><strong>带内 HHG（intraband）</strong>：电子已经处于导带，在光场作用下在能带内加速减速，其加速度产生时变电流，从而辐射谐波——这是一种”带内自由电子”辐射机制</li>
+</ul>
+<p>理解哪种机制主导，对后续所有体晶 HHG 的应用（阿秒脉冲产生、能带探测等）都至关重要。</p>
+<hr>
+<h2 id="2-能带结构：ZnO-的二带模型"><a href="#2-能带结构：ZnO-的二带模型" class="headerlink" title="2. 能带结构：ZnO 的二带模型"></a>2. 能带结构：ZnO 的二带模型</h2><p>Vampa 等人对 ZnO 体晶采用了<strong>非局域经验赝势方法</strong>（NL-EPM）计算的能带数据，选取价带顶（晶体场分裂带，记为 $v$ 带）和导带底（记为 $c$ 带）构建二带模型。</p>
+<p>沿 $\Gamma$-M 方向（$x$ 轴），能带色散展开为：</p>
+<script type="math/tex; mode=display">
+
+E_m(k_x) = \sum_{n=0}^{5} a_{n,m}\, (k_x a_x)^n, \quad m \in \\{v, c\\}</script><p>其中 NL-EPM 展开系数 $a<em>{n,m}$ 如 Table I 所列（取自文献 [25]）。价带在 $k</em>{x} = 0$（$\Gamma$ 点）处具有最大带隙：</p>
+<script type="math/tex; mode=display">
+
+\varepsilon_g(\Gamma) = E_c(0) - E_v(0) = 3.3\;\text{eV}</script><p>沿 $\Gamma$-M 方向的晶格常数 $a<em>{x} = 5.32$ a.u.，在 $k</em>{x} = \kappa<em>{x}/4$ 处（$\kappa</em>{x} = 2\pi/a_{x}$ 为第一倒格矢），带隙近似线性。</p>
+<p><strong>坐标系</strong>选取：$\hat{x} \parallel \Gamma$-M，$\hat{y} \parallel \Gamma$-K，$\hat{z} \parallel \Gamma$-A（光轴方向）。</p>
+<hr>
+<h2 id="3-驱动激光场"><a href="#3-驱动激光场" class="headerlink" title="3. 驱动激光场"></a>3. 驱动激光场</h2><p>采用单色平面波作为驱动场：</p>
+<script type="math/tex; mode=display">
+
+F(t) = F_0\,\cos(\omega t)</script><p><strong>Fig. 2 的计算参数</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">符号</th>
+<th style="text-align:left">数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">激光波长</td>
+<td style="text-align:left">$\lambda$</td>
+<td style="text-align:left">$3.25\;\mu\text{m}$</td>
+</tr>
+<tr>
+<td style="text-align:left">光场频率</td>
+<td style="text-align:left">$\omega$</td>
+<td style="text-align:left">$0.014$ a.u. $\approx 10.6\;\text{THz}$</td>
+</tr>
+<tr>
+<td style="text-align:left">场强</td>
+<td style="text-align:left">$F_0$</td>
+<td style="text-align:left">$0.0046$ a.u. $\approx 0.6\;\text{MV/cm}$</td>
+</tr>
+<tr>
+<td style="text-align:left">矢势</td>
+<td style="text-align:left">$A(t)$</td>
+<td style="text-align:left">$-(F_0/\omega)\,\sin(\omega t)$</td>
+</tr>
+<tr>
+<td style="text-align:left">激光半周期</td>
+<td style="text-align:left">$T_0/2$</td>
+<td style="text-align:left">$2.7$ fs</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>注：Fig. 2(a) 的退相干时间设为 $T_2 = \infty$（无退相干）；Fig. 2(b) 设为 $T_2 = 2.7$ fs（激光四分之一周期）。</p>
+<hr>
+<h2 id="4-半导体-Bloch-方程（SBE）"><a href="#4-半导体-Bloch-方程（SBE）" class="headerlink" title="4. 半导体 Bloch 方程（SBE）"></a>4. 半导体 Bloch 方程（SBE）</h2><p>电子-空穴对在光场驱动下的动力学由半导体 Bloch 方程描述。以晶体动量 $\mathbf{K} = \mathbf{k} - \mathbf{A}(t)$ 为变量（进入随矢势运动的参考系），方程组为：</p>
+<script type="math/tex; mode=display">
+
+i\,\frac{\partial n_v(\mathbf{K},t)}{\partial t} = \Omega^*(\mathbf{K},t)\,p(\mathbf{K},t) - \Omega(\mathbf{K},t)\,p^*(\mathbf{K},t)</script><script type="math/tex; mode=display">
+
+i\,\frac{\partial p(\mathbf{K},t)}{\partial t} = \big[\varepsilon_g(\mathbf{K},t) - i/T_2\big]\,p(\mathbf{K},t) + \Omega(\mathbf{K},t)\,\big[n_v(\mathbf{K},t) - n_c(\mathbf{K},t)\big]</script><p>其中：</p>
+<script type="math/tex; mode=display">
+
+\varepsilon_g(\mathbf{K},t) = E_c\big(\mathbf{K}+\mathbf{A}(t)\big) - E_v\big(\mathbf{K}+\mathbf{A}(t)\big)</script><p>是时变带隙。Rabi 频率和带间跃迁偶极矩的定义如下：</p>
+<script type="math/tex; mode=display">
+
+\Omega(\mathbf{K},t) = F(t)\,d\big(\mathbf{K}+\mathbf{A}(t)\big), \qquad d = \langle u_c|\nabla_{\mathbf{k}}|u_v\rangle</script><p><strong>初始条件</strong>：$n<em>{v}(\mathbf{K},0)=1,\; n</em>{c}(\mathbf{K},0)=0,\; p(\mathbf{K},0)=0$（所有电子初始在价带）。</p>
+<hr>
+<h2 id="5-带间电流与带内电流"><a href="#5-带间电流与带内电流" class="headerlink" title="5. 带间电流与带内电流"></a>5. 带间电流与带内电流</h2><p>总电流由两部分组成：</p>
+<script type="math/tex; mode=display">
+
+j_t = j_{ra} + j_{er}</script><h3 id="5-1-带内电流（intraband-bremsstrahlung）"><a href="#5-1-带内电流（intraband-bremsstrahlung）" class="headerlink" title="5.1 带内电流（intraband / bremsstrahlung）"></a>5.1 带内电流（intraband / bremsstrahlung）</h3><p>带内电流来源于导带电子在光场中的加速度：</p>
+<script type="math/tex; mode=display">
+
+j_{ra}(t) = \int_{BZ} d^3k\; n_c\big(\mathbf{k},t\big)\,\mathbf{v}_c\big(\mathbf{k},t\big)</script><p>其中 $\mathbf{v}<em>c$ 是导带的群速度。注意群速度与晶体动量 $\mathbf{K} = \mathbf{k} - \mathbf{A}(t)$ 直接相关，因此即使 $n</em>{c}$ 不变，$\mathbf{v}_c$ 也随时变化，产生交流电流。导带群速度的定义为：</p>
+<script type="math/tex; mode=display">
+
+\mathbf{v}_c(\mathbf{k},t) = \nabla_{\mathbf{k}}\,E_c(\mathbf{k})</script><h3 id="5-2-带间电流（interband-recombination）"><a href="#5-2-带间电流（interband-recombination）" class="headerlink" title="5.2 带间电流（interband / recombination）"></a>5.2 带间电流（interband / recombination）</h3><p>带间电流来源于电子-空穴对的复合发光。在低电离条件（$n<em>{v} - n</em>{c} \approx 1$）下，可将电流写成路径积分形式：</p>
+<script type="math/tex; mode=display">
+
+j_{er}(\Omega) = \frac{1}{\pi}\int_{BZ} d^3k\; d(k)\,p_{vc}(k)\,
+\int_{-\infty}^{\infty} dt\,
+\int_{-\infty}^{t} dt'\,
+F(t')\,d^*\big(\kappa_{t'}\big)\,
+e^{i\Omega t}\,e^{-iS(k,t',t)} \times e^{-(t-t')/T_2} + \text{c.c.}</script><p>其中<strong>经典作用量</strong>：</p>
+<script type="math/tex; mode=display">
+
+S(k,t',t) = \int_{t'}^{t} \varepsilon_g\big(k - A(\tau) + A(t)\big)\,d\tau</script><p>和<strong>晶体动量变换</strong>：</p>
+<script type="math/tex; mode=display">
+
+\kappa_{t'} = k + A(t') - A(t)</script><hr>
+<h2 id="6-鞍点近似与物理图像"><a href="#6-鞍点近似与物理图像" class="headerlink" title="6. 鞍点近似与物理图像"></a>6. 鞍点近似与物理图像</h2><p>对带间电流的路径积分使用鞍点近似（saddle-point approximation），可得到半经典物理解释。</p>
+<p>对 $t$ 求导的驻点条件：</p>
+<script type="math/tex; mode=display">
+
+\frac{\partial S}{\partial t} = 0 \quad \Longrightarrow \quad \Omega = \varepsilon_g\big(k - A(t) + A(t')\big)</script><p>对 $t’$ 求导的驻点条件：</p>
+<script type="math/tex; mode=display">
+
+\frac{\partial S}{\partial t'} = 0 \quad \Longrightarrow \quad \varepsilon_g\big(k - A(t) + A(t')\big) = 0</script><p>第二个条件对应于<strong>隧穿时刻</strong>的带隙为零（即电子隧穿通过的动量点）。</p>
+<p>由此可追踪完整的半经典轨迹：电子在 $t’$ 时刻隧穿进入导带（带隙为零的动量点），在光场中沿经典路径运动，在 $t$ 时刻返回价带，复合发光，光子能量由 $t$ 时刻的瞬时带隙决定。</p>
+<hr>
+<h2 id="7-Fig-2-的数值结果"><a href="#7-Fig-2-的数值结果" class="headerlink" title="7. Fig. 2 的数值结果"></a>7. Fig. 2 的数值结果</h2><p>Fig. 2 给出了 ZnO 体晶在 $\omega = 0.014$ a.u.、$F<em>0 = 0.0046$ a.u. 条件下，分别计算带间（$j</em>{er}$）和带内（$j_{ra}$）电流贡献的 HHG 谱。</p>
+<h3 id="Fig-2-a-—-T-2-infty-（无退相干）"><a href="#Fig-2-a-—-T-2-infty-（无退相干）" class="headerlink" title="Fig. 2(a) — $T_2 = \infty$（无退相干）"></a>Fig. 2(a) — $T_2 = \infty$（无退相干）</h3><p>在没有退相干的情况下，带间谱和带内谱都表现为<strong>平滑的连续背景</strong>，没有清晰的谐波峰结构。这与实验观测不符。</p>
+<p>原因是：<strong>多阶再碰撞的干涉效应</strong>。第一次再碰撞产生的谐波与第二次、第三次再碰撞产生的谐波之间存在相位差，多重干涉叠加后，将谐波结构抹平为连续谱。</p>
+<h3 id="Fig-2-b-—-T-2-2-7-fs（激光四分之一周期）"><a href="#Fig-2-b-—-T-2-2-7-fs（激光四分之一周期）" class="headerlink" title="Fig. 2(b) — $T_2 = 2.7$ fs（激光四分之一周期）"></a>Fig. 2(b) — $T_2 = 2.7$ fs（激光四分之一周期）</h3><p>当退相干时间缩短至 $T_2 = T_0/4$（约 2.7 fs）时，带间谱中出现了<strong>清晰的奇次谐波峰</strong>（9th, 11th, 13th, …），与实验结果一致。</p>
+<p>退相干机制的物理作用：</p>
+<script type="math/tex; mode=display">
+
+e^{-(t-t')/T_2} \xrightarrow{T_2 \to T_0/4} \text{在第二次再碰撞到来前已衰减至} \approx 0</script><p>这相当于退相干充当了一个<strong>时间门</strong>：只有第一次再碰撞在退相干发生前完成，对谐波有贡献；高阶再碰撞发生时，带间极化已失去相位记忆，被指数因子压制。</p>
+<h3 id="关键结论"><a href="#关键结论" class="headerlink" title="关键结论"></a>关键结论</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">带间 HHG（$j_{er}$）</th>
+<th style="text-align:left">带内 HHG（$j_{ra}$）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">物理机制</td>
+<td style="text-align:left">电子-空穴对复合发光</td>
+<td style="text-align:left">导带内电子加速辐射</td>
+</tr>
+<tr>
+<td style="text-align:left">对应原子 HHG</td>
+<td style="text-align:left">三步模型（隧穿-加速-复合）</td>
+<td style="text-align:left">无对应</td>
+</tr>
+<tr>
+<td style="text-align:left">主导频段</td>
+<td style="text-align:left"><strong>中红外（$\omega \sim 0.01$ a.u.）</strong></td>
+<td style="text-align:left">远红外（$\omega \ll 0.01$ a.u.）</td>
+</tr>
+<tr>
+<td style="text-align:left">Fig. 2 中的表现</td>
+<td style="text-align:left">奇次谐波峰清晰（$T_2 &lt; T_0/2$）</td>
+<td style="text-align:left">连续背景主导</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="8-小结"><a href="#8-小结" class="headerlink" title="8. 小结"></a>8. 小结</h2><p>Fig. 2 的核心发现是：</p>
+<ol>
+<li><strong>在中红外驱动场下，带间 HHG 主导 ZnO 体晶的谐波产生</strong>；带内 HHG 在该频段贡献可以忽略</li>
+<li><strong>退相干时间 $T_2$ 是决定谐波谱结构的关键参数</strong>：$T_2 = \infty$ 时多阶再碰撞干涉导致谱结构消失；$T_2 \lesssim T_0/2$ 时谱结构恢复</li>
+<li>带间 HHG 的物理机制与原子 HHG 本质相同（隧穿-加速-复合三步），这为将原子阿秒技术移植到凝聚态体系奠定了理论基础</li>
+</ol>
+<hr>
+<p><strong>参考文献</strong></p>
+<p>Vampa G, McDonald C R, Orlando G, et al. <em>Semiclassical analysis of high-harmonic generation in bulk crystals</em> [J]. Physical Review B, 2015, 91(6): 064302.</p>
+<hr>
+<p><strong>生成时间</strong>：2026-03-30 12:30:45 (北京时间 UTC+8)</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Jyu-Phys.github.io">Jyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jyu-phys.github.io/2026/03/30/2026-03-30-vampa-fig2-standard/">https://jyu-phys.github.io/2026/03/30/2026-03-30-vampa-fig2-standard/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Jyu-Phys.github.io" target="_blank">Jyu's cosmos</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A2/">高次谐波</a><a class="post-meta__tags" href="/tags/%E4%BD%93%E6%99%B6-HHG/">体晶 HHG</a><a class="post-meta__tags" href="/tags/%E5%8D%8A%E5%AF%BC%E4%BD%93-Bloch-%E6%96%B9%E7%A8%8B/">半导体 Bloch 方程</a><a class="post-meta__tags" href="/tags/ZnO/">ZnO</a><a class="post-meta__tags" href="/tags/%E8%83%BD%E5%B8%A6%E7%BB%93%E6%9E%84/">能带结构</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/29/2026-03-29-reproduce-fig1b-oam-ionization/" title="公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)</div></div><div class="info-2"><div class="info-item-1">引言Nature Communications (2025) 发表了 Bégin 等人的工作，首次揭示了携带轨道角动量 (OAM) 的涡旋光束能够控制原子和分子的强场遂穿电离过程。本文聚焦于 Fig. 1b——对称 Laguerre-Gaussian (LG) 光束在不同拓扑荷数 $l = \pm 1$ 下的横向电离概率角分辨分布，完整逆向推导其背后的公式链。 公式架构总览Fig. 1b 的生成依赖四层递进的公式架构：  光场构建：LG 光束的螺旋相位电场 原子初态：氩原子 $3p$ 轨道的动量空间波函数 跃迁矩阵元：超越偶极近似的扩展 SFA 鞍点动力学：最速下降法求解时间积分   第一层：光场构建 — LG 光束电场Eq. 1：对称 LG 光束电场E_{\pm}(x, y, z) = E_0 \frac{w_0}{w(z)} \left(\frac{\sqrt{2} r}{w(z)}\right)^{|l|} \exp\left(-\frac{r^2}{w^2(z)}\right) \exp\left(ikz - \frac{ikr^2}{2R(z)} + i(|l|+1)\...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related no-desc" href="/2026/03/25/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A21/" title="硅的TDDFT高次谐波[1]：复现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-25</div><div class="info-item-2">硅的TDDFT高次谐波[1]：复现</div></div></div></a><a class="pagination-related" href="/2026/03/26/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A23/" title="硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-26</div><div class="info-item-2">硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;</div></div><div class="info-2"><div class="info-item-1">整理来源Gemini-正确性存疑 在利用 Octopus 软件包进行含时密度泛函理论（TDDFT）和固体高次谐波（HHG）模拟时，初学者最容易踩坑、也是最消耗服务器算力的一个参数，莫过于 ExtraStates（空带/导带数）。 设置少了，高频谐波被非物理截断；设置多了，对角化矩阵爆炸，计算时间成倍增加。本文将从最底层的固体物理图像出发，带你彻底厘清 ExtraStates 的“舍”与“得”，并给出一套精准预估空带数量的实战方法。 一、 物理图像：价带是“自带”的，导带是“建”上去的在 Octopus 这样的实空间（Real-Space）TDDFT 代码中：  价带（占据态）：在绝对零度下，系统所有的价电子刚好填满若干条能带。Octopus 会自动根据原子种类和数量算出这些被填满的能带（例如单晶硅原胞的 4 条价带）。程序默认只计算这些态，因此 ExtraStates 默认值为 0。 导带（非占据态/空带）：在价带上方，跨越带隙（Bandgap）的广阔空间就是导带。当你在代码中写入 ExtraStates = N 时，你是在命令程序：“除了填满的价带，请再往高能区显式地计算 N ...</div></div></div></a><a class="pagination-related no-desc" href="/2026/03/24/%E7%94%B5%E5%9C%BA%E5%88%86%E6%9E%90%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96MATLAB%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%E5%BA%93/" title="电场分析与可视化MATLAB核心函数库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-24</div><div class="info-item-2">电场分析与可视化MATLAB核心函数库</div></div></div></a><a class="pagination-related no-desc" href="/2026/03/25/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A22/" title="硅的TDDFT高次谐波[2]：从基态inp到超算PBS与MATLAB数据处理全流程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-25</div><div class="info-item-2">硅的TDDFT高次谐波[2]：从基态inp到超算PBS与MATLAB数据处理全流程</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Jyu</div><div class="author-info-description">Ultrafast atomic and molecular physics</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jyu-Phys"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91Vampa-PRB-%E4%BD%93%E6%99%B6-HHG-Fig-2%EF%BC%9A%E5%B8%A6%E9%97%B4%E4%B8%8E%E5%B8%A6%E5%86%85%E8%B0%90%E6%B3%A2%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">1.</span> <span class="toc-text">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%89%A9%E7%90%86%E8%83%8C%E6%99%AF%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94%E8%BE%83%E5%B8%A6%E9%97%B4%E4%B8%8E%E5%B8%A6%E5%86%85%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 物理背景：为什么比较带间与带内？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%83%BD%E5%B8%A6%E7%BB%93%E6%9E%84%EF%BC%9AZnO-%E7%9A%84%E4%BA%8C%E5%B8%A6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">2. 能带结构：ZnO 的二带模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%A9%B1%E5%8A%A8%E6%BF%80%E5%85%89%E5%9C%BA"><span class="toc-number">1.3.</span> <span class="toc-text">3. 驱动激光场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8D%8A%E5%AF%BC%E4%BD%93-Bloch-%E6%96%B9%E7%A8%8B%EF%BC%88SBE%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">4. 半导体 Bloch 方程（SBE）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B8%A6%E9%97%B4%E7%94%B5%E6%B5%81%E4%B8%8E%E5%B8%A6%E5%86%85%E7%94%B5%E6%B5%81"><span class="toc-number">1.5.</span> <span class="toc-text">5. 带间电流与带内电流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%B8%A6%E5%86%85%E7%94%B5%E6%B5%81%EF%BC%88intraband-bremsstrahlung%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 带内电流（intraband &#x2F; bremsstrahlung）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%B8%A6%E9%97%B4%E7%94%B5%E6%B5%81%EF%BC%88interband-recombination%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 带间电流（interband &#x2F; recombination）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%9E%8D%E7%82%B9%E8%BF%91%E4%BC%BC%E4%B8%8E%E7%89%A9%E7%90%86%E5%9B%BE%E5%83%8F"><span class="toc-number">1.6.</span> <span class="toc-text">6. 鞍点近似与物理图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Fig-2-%E7%9A%84%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="toc-number">1.7.</span> <span class="toc-text">7. Fig. 2 的数值结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fig-2-a-%E2%80%94-T-2-infty-%EF%BC%88%E6%97%A0%E9%80%80%E7%9B%B8%E5%B9%B2%EF%BC%89"><span class="toc-number">1.7.1.</span> <span class="toc-text">Fig. 2(a) — $T_2 &#x3D; \infty$（无退相干）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fig-2-b-%E2%80%94-T-2-2-7-fs%EF%BC%88%E6%BF%80%E5%85%89%E5%9B%9B%E5%88%86%E4%B9%8B%E4%B8%80%E5%91%A8%E6%9C%9F%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">Fig. 2(b) — $T_2 &#x3D; 2.7$ fs（激光四分之一周期）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%93%E8%AE%BA"><span class="toc-number">1.7.3.</span> <span class="toc-text">关键结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%B0%8F%E7%BB%93"><span class="toc-number">1.8.</span> <span class="toc-text">8. 小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/30/2026-03-30-vampa-fig2-standard/" title="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</a><time datetime="2026-03-30T04:30:00.000Z" title="发表于 2026-03-30 12:30:00">2026-03-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/29/2026-03-29-reproduce-fig1b-oam-ionization/" title="公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)">公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)</a><time datetime="2026-03-28T17:13:40.000Z" title="发表于 2026-03-29 01:13:40">2026-03-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/28/Octopus%E5%AE%9E%E6%88%98/" title="Octopus 实战：MPI并行策略与“对称性缩减Ace”">Octopus 实战：MPI并行策略与“对称性缩减Ace”</a><time datetime="2026-03-28T02:00:00.000Z" title="发表于 2026-03-28 10:00:00">2026-03-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/26/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A23/" title="硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;">硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;</a><time datetime="2026-03-26T08:00:00.000Z" title="发表于 2026-03-26 16:00:00">2026-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/25/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A21/" title="硅的TDDFT高次谐波[1]：复现">硅的TDDFT高次谐波[1]：复现</a><time datetime="2026-03-25T02:00:00.000Z" title="发表于 2026-03-25 10:00:00">2026-03-25</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Jyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src="/js/starry.js"></script><script id="canvas_nest" defer="defer" color="255,255,255" opacity="0.6" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
