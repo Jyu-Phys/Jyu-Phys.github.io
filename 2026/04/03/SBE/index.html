@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Jyu's cosmos | Jyu's cosmos</title><meta name="author" content="Jyu"><meta name="copyright" content="Jyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="title: “学习笔记：硅晶体中的激光偏振与电子动力学 (HHG)”  author: JY  date: 2026-04-03  tags: [固体物理, 高次谐波, TDDFT, Octopus, 布里渊区]   category: 物理计算与模拟导读  本文梳理了面心立方（FCC）硅晶体在强激光场下的偏振响应，核心在于打通“真实空间晶体结构”与“$k$ 空间动量地图”的物理直觉">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jyu&#39;s cosmos">
+<meta property="og:url" content="https://jyu-phys.github.io/2026/04/03/SBE/index.html">
+<meta property="og:site_name" content="Jyu&#39;s cosmos">
+<meta property="og:description" content="title: “学习笔记：硅晶体中的激光偏振与电子动力学 (HHG)”  author: JY  date: 2026-04-03  tags: [固体物理, 高次谐波, TDDFT, Octopus, 布里渊区]   category: 物理计算与模拟导读  本文梳理了面心立方（FCC）硅晶体在强激光场下的偏振响应，核心在于打通“真实空间晶体结构”与“$k$ 空间动量地图”的物理直觉">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jyu-phys.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-04-03T07:30:01.834Z">
+<meta property="article:modified_time" content="2026-04-03T07:31:48.871Z">
+<meta property="article:author" content="Jyu">
+<meta property="article:tag" content="原子分子物理, 计算模拟, Fortran, MATLAB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jyu-phys.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "https://jyu-phys.github.io/2026/04/03/SBE/",
+  "image": "https://jyu-phys.github.io/img/avatar.jpg",
+  "datePublished": "2026-04-03T07:30:01.834Z",
+  "dateModified": "2026-04-03T07:31:48.871Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Jyu",
+      "url": "https://Jyu-Phys.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jyu-phys.github.io/2026/04/03/SBE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Jyu\'s cosmos',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/bg.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Jyu's cosmos</span></a><a class="nav-page-title" href="/"><span class="site-name">Jyu's cosmos</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">无标题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-03T07:30:01.834Z" title="发表于 2026-04-03 15:30:01">2026-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-03T07:31:48.871Z" title="更新于 2026-04-03 15:31:48">2026-04-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><ul>
+<li></li>
+</ul>
+<hr>
+<p>  title: “学习笔记：硅晶体中的激光偏振与电子动力学 (HHG)”<br>  author: JY<br>  date: 2026-04-03<br>  tags: [固体物理, 高次谐波, TDDFT, Octopus, 布里渊区]</p>
+<h2 id="category-物理计算与模拟"><a href="#category-物理计算与模拟" class="headerlink" title="  category: 物理计算与模拟"></a>  category: 物理计算与模拟</h2><h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>  本文梳理了面心立方（FCC）硅晶体在强激光场下的偏振响应，核心在于打通“真实空间晶体结构”与“$k$ 空间动量地图”的物理直觉。这对于理解高次谐波产生（HHG）机制以及设置物理仿真软件的计算参数至关重要。</p>
+<hr>
+<h2 id="第一篇章：基础物理图像重建"><a href="#第一篇章：基础物理图像重建" class="headerlink" title="第一篇章：基础物理图像重建"></a>第一篇章：基础物理图像重建</h2><h3 id="1-基础知识储备-Glossary"><a href="#1-基础知识储备-Glossary" class="headerlink" title="1. 基础知识储备 (Glossary)"></a>1. 基础知识储备 (Glossary)</h3><p>  在深入探讨电子动力学之前，必须先明确以下几个物理和晶体学中的核心概念：</p>
+<ul>
+<li><strong>真实空间 (Real Space)</strong>：我们在日常生活中能感知到的三维物理空间。在固体物理中，它描述的是晶体中原子实际排列的几何位置。硅（Si）的原子排列在真实空间中呈现面心立方 (FCC) 结构（具体为金刚石结构）。</li>
+<li><strong>倒空间 / $k$ 空间 (Reciprocal Space / $k$-space)</strong>：真实空间的“傅里叶变换”结果，是一个抽象的数学空间。它的坐标系不是位置（米），而是波数或动量。电子在晶体中的运动轨迹、能带结构都是在这个地图上绘制的。真实空间的 FCC 结构，在 $k$ 空间中对应的是体心立方 (BCC) 结构。</li>
+<li><strong>第一布里渊区 (First Brillouin Zone, FBZ)</strong>：$k$ 空间中的“最小重复单元”。由于晶体具有周期性，电子的动量状态只要在这个区域内研究透彻，就可以推广到整个晶体。对于 FCC 晶格，第一布里渊区的几何形状是一个截角八面体。</li>
+<li><strong>米勒指数 (Miller Indices, 比如 [100], [110])</strong>：晶体学中用来表示晶体方向（或晶面）的坐标系统。例如，[100] 表示从原点出发沿 $x$ 轴移动的一个矢量方向（通常对应立方体的边），而 [110] 表示沿 $x$ 和 $y$ 轴同时移动的矢量方向（通常对应立方体面的对角线）。</li>
+<li><strong>线偏振光 (Linearly Polarized Light)</strong>：一种电磁波，其电场矢量在空间中只沿着一个固定的直线方向周期性振荡。在本文的语境中，偏振方向就是“推”着晶体内部电子运动的受力方向。</li>
+<li><p><strong>高次谐波产生 (High-order Harmonic Generation, HHG)</strong>：一种极端非线性光学现象。当超强激光照射晶体时，电子在强电场驱动下发生剧烈的带内加速和带间跃迁，进而辐射出频率为入射激光频率整数倍的高频光子。</p>
+<h3 id="2-什么是第一布里渊区-FBZ-？"><a href="#2-什么是第一布里渊区-FBZ-？" class="headerlink" title="2. 什么是第一布里渊区 (FBZ)？"></a>2. 什么是第一布里渊区 (FBZ)？</h3><p>简单来说，第一布里渊区（First Brillouin Zone）就是电子在晶体中运动时，“最核心、最基础的动量地图”。</p>
+</li>
+<li><p><strong>通俗比喻：壁纸的“最小重复单元”</strong><br>  想象一面贴满重复花纹壁纸的墙。研究壁纸设计不需要看整面墙，只需剪下一块完整、不重复的最小图案。晶体由原子周期性排列而成，电子在其中的动量也是周期性重复的。第一布里渊区，就是 $k$ 空间里的这块“最小重复图案”。</p>
+<p><strong>为什么物理学家只关心“第一”区？</strong></p>
+</li>
+<li><strong>物理状态的“同质化”</strong>：根据布洛赫定理 $E(k) = E(k+G)$，电子在第一区之外的状态，都可以完全“平移”等价回第一区内的某个点。外面的世界只是第一区的“翻版”。</li>
+<li><p><strong>边界即“墙壁”（布拉格反射）</strong>：当电子动量碰到边界（如 $X$ 点、$K$ 点）时，物质波波长刚好满足布拉格衍射条件，形成驻波无法顺利通过，从而导致了能隙（Band Gap）的产生。</p>
+<h3 id="3-避坑指南：第一布里渊区里没有原子！"><a href="#3-避坑指南：第一布里渊区里没有原子！" class="headerlink" title="3. 避坑指南：第一布里渊区里没有原子！"></a>3. 避坑指南：第一布里渊区里没有原子！</h3><p>初学者最容易踩坑的误区就是在第一布里渊区里找原子。这就像是在“汽车的速度表盘上找红绿灯”——找错地方了。我们必须严格划清“两个世界”的界限：</p>
+<p>| 维度         | 世界一：真实空间 (Real Space)        | 世界二：$k$ 空间 (Reciprocal Space)        |<br>| :—————- | :—————————————————- | :————————————————————- |<br>| <strong>本质</strong>     | 原子的家（“赛车场实体地图”）         | 速度/动量的地图（“速度表和方向盘”）        |<br>| <strong>坐标系</strong>   | $x, y, z$（单位是距离，如纳米或埃）  | $k_x, k_y, k_z$（单位是空间频率或动量）    |<br>| <strong>住着谁</strong>   | 硅原子（原子核和内层电子）           | 没有实体原子，只有共有电子的动量状态       |<br>| <strong>长什么样</strong> | 实体原子排列成面心立方（金刚石结构） | 第一布里渊区（如截角八面体形状的边界围墙） |</p>
+</li>
+<li><p><strong>核心联系：傅里叶变换魔法</strong><br>  虽然第一布里渊区里没有原子，但原子的排列方式，决定了第一布里渊区的形状！在真实空间里，原子周期性排列形成了坚固的“势垒栅栏”。当电子的动量（速度）达到某个临界值时，物质波会被原子栅栏强烈反射。在 $k$ 空间里，把这些“临界动量点”连起来，就拼成了第一布里渊区的物理墙壁。</p>
+</li>
+</ul>
+<hr>
+<h2 id="第二篇章：空间映射与激光偏振"><a href="#第二篇章：空间映射与激光偏振" class="headerlink" title="第二篇章：空间映射与激光偏振"></a>第二篇章：空间映射与激光偏振</h2><h3 id="4-核心概念：两个世界的对应法则"><a href="#4-核心概念：两个世界的对应法则" class="headerlink" title="4. 核心概念：两个世界的对应法则"></a>4. 核心概念：两个世界的对应法则</h3><p>  理解电子动力学的第一步，是建立真实空间与 $k$ 空间之间的几何映射。</p>
+<p>  (E:\Desktop\MyBlog\source\img\si_1\nengdai.png)</p>
+<blockquote>
+<p><strong>图 1：</strong> (a) FCC 硅晶格的第一布里渊区。$M$ 点位于第一布里渊区之外，沿 $\Gamma \rightarrow K$ 连线方向。(b) 硅的真实空间晶格。假设激光沿 $z$ 轴传播，当偏振沿 [100] 方向（红色箭头）时，电子在 $k$ 空间沿 $\Gamma \rightarrow X$ 加速；当偏振沿 [110] 方向（绿色箭头）时，电子沿 $\Gamma \rightarrow M$ 运动。</p>
+</blockquote>
+<ul>
+<li><p><strong>真实空间物理晶体</strong><br>  激光的线偏振方向决定了电子在晶体内部被驱动的初始“航向”。</p>
+<ul>
+<li><strong>[100] 方向</strong>：沿着晶胞立方体的一条边，对称性最高（图 1b 红色箭头）。</li>
+<li><strong>[110] 方向</strong>：沿着立方体一个面的对角线，表现出明显的各向异性（图 1b 绿色箭头）。</li>
+<li><strong>[111] 方向</strong>：沿着体对角线，原子堆积最紧密。</li>
+</ul>
+</li>
+<li><p><strong>$k$ 空间动量地图</strong><br>  电子受激光驱动时，在 $k$ 空间的截角八面体中会沿着特定的跑道运动：</p>
+<p>| 真实偏振方向 | 对应的 $k$ 空间路径             | 地标点物理含义                                            |<br>| :—————- | :——————————————— | :———————————————————————————— |<br>| <strong>[100]</strong>    | $\Gamma \rightarrow X$          | $X$ 点位于截角八面体的正方形面中心（图 1a 红线）。        |<br>| <strong>[110]</strong>    | $\Gamma \rightarrow M$ (或 $K$) | $K$ 或 $M$ 点指向正方形与六边形的交界区域（图 1a 绿线）。 |<br>| <strong>[111]</strong>    | $\Gamma \rightarrow L$          | $L$ 点位于截角八面体的正六边形面中心。                    |</p>
+<blockquote>
+<p><strong>注</strong>：$\Gamma$ 点始终代表第一布里渊区的几何中心（即电子动量为零的状态）。</p>
+</blockquote>
+<h3 id="5-动态演化：360°-偏振旋转扫描"><a href="#5-动态演化：360°-偏振旋转扫描" class="headerlink" title="5. 动态演化：360° 偏振旋转扫描"></a>5. 动态演化：360° 偏振旋转扫描</h3><p>在 (001) 晶面内将激光偏振方向旋转 360°，相当于对晶格电势进行了一次高分辨率的“动力学 CT 扫描”。</p>
+<p>以 [100] 方向为 0° 起点，电子的 $k$ 空间冲浪路线切换如下：</p>
+<p>| 偏振角度 | 晶向指数 | $k$ 空间对应路径           |<br>| :———- | :———- | :————————————- |<br>| 0°       | [100]    | $\Gamma \rightarrow X$     |<br>| 45°      | [110]    | $\Gamma \rightarrow M / K$ |<br>| 90°      | [010]    | $\Gamma \rightarrow X$     |<br>| 135°     | [1-10]   | $\Gamma \rightarrow M / K$ |<br>| 180°     | [-100]   | $\Gamma \rightarrow X$     |</p>
+</li>
+<li><p><strong>规律总结：</strong> 由于硅具备严格的 $C_4$ 旋转对称性，偏振响应呈现高度的周期性。</p>
+<ul>
+<li><strong>每隔 45°</strong>：电子路径在“沿边走”与“沿对角线走”之间切换。</li>
+<li><strong>每隔 90°</strong>：物理现象完全重复。</li>
+<li><strong>研究极简策略</strong>：在分析数据或设计算例时，仅需扫描 0° 到 45° 区间，即可完整重构整个 360° 的各向异性规律。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="第三篇章：强场计算与-SBE-模型设定"><a href="#第三篇章：强场计算与-SBE-模型设定" class="headerlink" title="第三篇章：强场计算与 SBE 模型设定"></a>第三篇章：强场计算与 SBE 模型设定</h2><h3 id="6-强场物理的特殊考量：为什么选-M-点？"><a href="#6-强场物理的特殊考量：为什么选-M-点？" class="headerlink" title="6. 强场物理的特殊考量：为什么选 $M$ 点？"></a>6. 强场物理的特殊考量：为什么选 $M$ 点？</h3><p>  在配置模拟计算的输入文件时，经常会遇到关于 [110] 方向到底是用 $K$ 点还是 $M$ 点的疑惑。虽然 $K$ 和 $M$ 都在同一条射线上，但对于 HHG 等强场物理现象，通常必须使用 $M$ 点。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">对比维度</th>
+<th style="text-align:left">$K$ 点</th>
+<th style="text-align:left">$M$ 点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>空间位置</strong></td>
+<td style="text-align:left">第一布里渊区边界上（棱边）</td>
+<td style="text-align:left">已经冲出第一布里渊区，位于边界之外</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>路径长度</strong></td>
+<td style="text-align:left">$\Gamma \rightarrow K$ 距离较短</td>
+<td style="text-align:left">$\Gamma \rightarrow M$ 距离较长，通常与 $\Gamma \rightarrow X$ 对标</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>研究场景</strong></td>
+<td style="text-align:left">基础能带结构、弱场微扰</td>
+<td style="text-align:left">强场动力学、固体 HHG 频谱模拟</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>  <strong>选取 $\Gamma \rightarrow M$ 路径的三大核心原因：</strong></p>
+<ol>
+<li><strong>公平对比</strong>：为了让 [110] 与 [100]（$\Gamma \rightarrow X$）的动力学过程具有同等量级的空间跨度，需要将路径拉长至 $M$ 点。</li>
+<li><strong>越界动力学</strong>：强激光场会瞬间将电子推过第一区边界。$M$ 点包含了电子冲出 $K$ 点后的关键能带特征（如带隙极值或交叉点），这对于分析高频谐波信号至关重要。</li>
+<li><p><strong>计算周期性</strong>：定义延伸至 $M$ 点的仿真网格，更符合实时演化算法（如 TDDFT）中边界条件的数学对称性要求。</p>
+<h3 id="7-SBE-模型的降维打击：从-3D-到-1D-近似"><a href="#7-SBE-模型的降维打击：从-3D-到-1D-近似" class="headerlink" title="7. SBE 模型的降维打击：从 3D 到 1D 近似"></a>7. SBE 模型的降维打击：从 3D 到 1D 近似</h3><p>从复杂的三维布里渊区过渡到二能带 SBE（半导体布洛赫方程）模型时，为了简化计算，通常采用一维近似（1D Approximation）。</p>
+</li>
+</ol>
+<ul>
+<li><strong>物理本质（沿着跑道的距离）</strong>：在强场近似下，电子几乎被超强激光“绑架”着沿电场方向运动。假设垂直方向动量无变化（即 $k_{\perp} = 0$），电子轨迹在 $k$ 空间就被压缩成了一条线。</li>
+<li><p><strong>横坐标含义</strong>：二能带图的横坐标 $k_{\parallel}$，就是电子在这条“一维线”上距离中心点 $\Gamma$ 的长度。</p>
+<h3 id="8-横坐标的具体取值范围与推导"><a href="#8-横坐标的具体取值范围与推导" class="headerlink" title="8. 横坐标的具体取值范围与推导"></a>8. 横坐标的具体取值范围与推导</h3><p>以硅的 HHG 实验关心的两个主轴为例，一维 $k$ 空间网格的取法由晶体几何特征和激光振荡特性共同决定：</p>
+<h4 id="路径-A：激光沿-100-偏振-Gamma-rightarrow-X"><a href="#路径-A：激光沿-100-偏振-Gamma-rightarrow-X" class="headerlink" title="路径 A：激光沿 [100] 偏振 ($\Gamma \rightarrow X$)"></a>路径 A：激光沿 [100] 偏振 ($\Gamma \rightarrow X$)</h4></li>
+<li><strong>横坐标含义</strong>：此时横坐标即为 $k_x$。</li>
+<li><strong>对应的 3D 路径</strong>：穿过中心的 $-X \rightarrow \Gamma \rightarrow X$ 直线。</li>
+<li><p><strong>网格取值区间</strong>：$\left[-\frac{2\pi}{a}, \frac{2\pi}{a}\right]$</p>
+<p><strong>公式拆解与物理意义：</strong></p>
+</li>
+</ul>
+<ol>
+<li><strong>$a$ 与 $2\pi$</strong>：$a$ 是晶格常数（硅为 0.543 nm），代表原子的重复周期；$2\pi$ 代表波的一个完整相位周期。</li>
+<li><strong>倒空间的“汇率”</strong>：每隔 $\frac{2\pi}{a}$ 的动量距离，电子状态重复一次。$\frac{2\pi}{a}$ 正是 $\Gamma$ 点到第一布里渊区“墙壁”中心 $X$ 点的精确数学与物理距离。</li>
+<li><p><strong>为什么是正负区间？</strong>：激光是交流电场，前半周期向右推（$+k$），后半周期向左拉（$-k$）。设定 $\left[-\frac{2\pi}{a}, \frac{2\pi}{a}\right]$ 意味着在代码里建立了一段关于 $\Gamma$ 点完美对称的跑道，供电子在激光驱动下完整地来回“冲浪”。</p>
+<h4 id="路径-B：激光沿-110-偏振-Gamma-rightarrow-M"><a href="#路径-B：激光沿-110-偏振-Gamma-rightarrow-M" class="headerlink" title="路径 B：激光沿 [110] 偏振 ($\Gamma \rightarrow M$)"></a>路径 B：激光沿 [110] 偏振 ($\Gamma \rightarrow M$)</h4></li>
+</ol>
+<ul>
+<li><strong>横坐标含义</strong>：沿面对角线的动量，标量大小为 $\sqrt{k_x^2 + k_y^2}$。</li>
+<li><strong>对应的 3D 路径</strong>：穿过中心的 $-M \rightarrow \Gamma \rightarrow M$ 直线。</li>
+<li><p><strong>网格取值区间</strong>：$\left[-\sqrt{2}\frac{2\pi}{a}, \sqrt{2}\frac{2\pi}{a}\right]$</p>
+<p><strong>为什么是 $\sqrt{2}$ 且必须取到 $M$ 点？</strong></p>
+</li>
+</ul>
+<ol>
+<li><strong>勾股定理算长度</strong>：$X$ 点轴上距离是 $\frac{2\pi}{a}$。$M$ 点在对角线 (1,1,0) 方向上，距离原点的直线物理距离即为 $\sqrt{1^2 + 1^2} \times \frac{2\pi}{a} = \sqrt{2}\frac{2\pi}{a}$。</li>
+<li><strong>隐藏的 $K$ 点比例</strong>：沿此跑道，电子在距离起点 75% 的地方会先撞到第一布里渊区边界（$K$ 点，坐标约为 $1.06 \frac{2\pi}{a}$）。电子需冲破墙壁再跑剩下 25% 的路程才能到达 $M$ 点。</li>
+<li><strong>周期性边界条件 (PBC) 的铁律</strong>：量子计算要求跑道两端必须平滑拼接（导数为零的极值点）。<ul>
+<li><strong>如果在 $K$ 点截断</strong>：能带通常带斜率，强行截断会导致波函数无法平滑拼接，程序算出的 HHG 会产生非物理数值振荡。</li>
+<li><strong>延伸到 $M$ 点</strong>：在固体物理中，$M$ 点在晶体学上完全等价于相邻布里渊区的另一个 $X$ 点！它的能带曲线必然平缓。</li>
+</ul>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Jyu-Phys.github.io">Jyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jyu-phys.github.io/2026/04/03/SBE/">https://jyu-phys.github.io/2026/04/03/SBE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Jyu-Phys.github.io" target="_blank">Jyu's cosmos</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/30/2026-03-30-vampa-fig2-standard/" title="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</div></div><div class="info-2"><div class="info-item-1">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比论文：Vampa G, McDonald C R, Orlando G, et al. Semiclassical analysis of high-harmonic generation in bulk crystals [J]. Physical Review B, 2015, 91(6): 064302. 目标：Fig. 2 — ZnO 体晶中带间（interband）与带内（intraband）HHG 谱的对比分析 核心问题：在中红外驱动场下，ZnO 体晶的 HHG 信号主要由哪种机制产生？  1. 物理背景：为什么比较带间与带内？在原子 HHG 中，物理图像非常清晰：电子隧穿电离 $\rightarrow$ 在激光场中加速 $\rightarrow$ 返回母离子并复合发光。整个过程是真空中的单电子动力学。 固体中情况更为复杂。电子不是自由粒子，而是被周期势场约束在能带中。当光场驱动固体时，存在两种基本的高次谐波产生机制：  带间 HHG（interband）：电子从价带隧穿到导带，形成电子-空...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Jyu</div><div class="author-info-description">Ultrafast atomic and molecular physics</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jyu-Phys"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#category-%E7%89%A9%E7%90%86%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%A8%A1%E6%8B%9F"><span class="toc-number">1.</span> <span class="toc-text">  category: 物理计算与模拟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E8%AF%BB"><span class="toc-number">2.</span> <span class="toc-text">导读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AF%87%E7%AB%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%89%A9%E7%90%86%E5%9B%BE%E5%83%8F%E9%87%8D%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">第一篇章：基础物理图像重建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%82%A8%E5%A4%87-Glossary"><span class="toc-number">3.1.</span> <span class="toc-text">1. 基础知识储备 (Glossary)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E7%AC%AC%E4%B8%80%E5%B8%83%E9%87%8C%E6%B8%8A%E5%8C%BA-FBZ-%EF%BC%9F"><span class="toc-number">3.2.</span> <span class="toc-text">2. 什么是第一布里渊区 (FBZ)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%9A%E7%AC%AC%E4%B8%80%E5%B8%83%E9%87%8C%E6%B8%8A%E5%8C%BA%E9%87%8C%E6%B2%A1%E6%9C%89%E5%8E%9F%E5%AD%90%EF%BC%81"><span class="toc-number">3.3.</span> <span class="toc-text">3. 避坑指南：第一布里渊区里没有原子！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AF%87%E7%AB%A0%EF%BC%9A%E7%A9%BA%E9%97%B4%E6%98%A0%E5%B0%84%E4%B8%8E%E6%BF%80%E5%85%89%E5%81%8F%E6%8C%AF"><span class="toc-number">4.</span> <span class="toc-text">第二篇章：空间映射与激光偏振</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%EF%BC%9A%E4%B8%A4%E4%B8%AA%E4%B8%96%E7%95%8C%E7%9A%84%E5%AF%B9%E5%BA%94%E6%B3%95%E5%88%99"><span class="toc-number">4.1.</span> <span class="toc-text">4. 核心概念：两个世界的对应法则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8A%A8%E6%80%81%E6%BC%94%E5%8C%96%EF%BC%9A360%C2%B0-%E5%81%8F%E6%8C%AF%E6%97%8B%E8%BD%AC%E6%89%AB%E6%8F%8F"><span class="toc-number">4.2.</span> <span class="toc-text">5. 动态演化：360° 偏振旋转扫描</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AF%87%E7%AB%A0%EF%BC%9A%E5%BC%BA%E5%9C%BA%E8%AE%A1%E7%AE%97%E4%B8%8E-SBE-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E5%AE%9A"><span class="toc-number">5.</span> <span class="toc-text">第三篇章：强场计算与 SBE 模型设定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%BC%BA%E5%9C%BA%E7%89%A9%E7%90%86%E7%9A%84%E7%89%B9%E6%AE%8A%E8%80%83%E9%87%8F%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89-M-%E7%82%B9%EF%BC%9F"><span class="toc-number">5.1.</span> <span class="toc-text">6. 强场物理的特殊考量：为什么选 $M$ 点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-SBE-%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%99%8D%E7%BB%B4%E6%89%93%E5%87%BB%EF%BC%9A%E4%BB%8E-3D-%E5%88%B0-1D-%E8%BF%91%E4%BC%BC"><span class="toc-number">5.2.</span> <span class="toc-text">7. SBE 模型的降维打击：从 3D 到 1D 近似</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%A8%AA%E5%9D%90%E6%A0%87%E7%9A%84%E5%85%B7%E4%BD%93%E5%8F%96%E5%80%BC%E8%8C%83%E5%9B%B4%E4%B8%8E%E6%8E%A8%E5%AF%BC"><span class="toc-number">5.3.</span> <span class="toc-text">8. 横坐标的具体取值范围与推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84-A%EF%BC%9A%E6%BF%80%E5%85%89%E6%B2%BF-100-%E5%81%8F%E6%8C%AF-Gamma-rightarrow-X"><span class="toc-number">5.3.1.</span> <span class="toc-text">路径 A：激光沿 [100] 偏振 ($\Gamma \rightarrow X$)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84-B%EF%BC%9A%E6%BF%80%E5%85%89%E6%B2%BF-110-%E5%81%8F%E6%8C%AF-Gamma-rightarrow-M"><span class="toc-number">5.3.2.</span> <span class="toc-text">路径 B：激光沿 [110] 偏振 ($\Gamma \rightarrow M$)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/03/SBE/" title="无标题">无标题</a><time datetime="2026-04-03T07:30:01.834Z" title="发表于 2026-04-03 15:30:01">2026-04-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/30/2026-03-30-vampa-fig2-standard/" title="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</a><time datetime="2026-03-30T04:30:00.000Z" title="发表于 2026-03-30 12:30:00">2026-03-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/29/2026-03-29-reproduce-fig1b-oam-ionization/" title="公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)">公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)</a><time datetime="2026-03-28T17:13:40.000Z" title="发表于 2026-03-29 01:13:40">2026-03-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/28/Octopus%E5%AE%9E%E6%88%98/" title="Octopus 实战：MPI并行策略与“对称性缩减Ace”">Octopus 实战：MPI并行策略与“对称性缩减Ace”</a><time datetime="2026-03-28T02:00:00.000Z" title="发表于 2026-03-28 10:00:00">2026-03-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/26/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A23/" title="硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;">硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;</a><time datetime="2026-03-26T08:00:00.000Z" title="发表于 2026-03-26 16:00:00">2026-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Jyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src="/js/starry.js"></script><script id="canvas_nest" defer="defer" color="255,255,255" opacity="0.6" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
