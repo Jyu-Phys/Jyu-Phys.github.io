@@ -623,7 +623,16 @@ document.addEventListener('DOMContentLoaded', () => {
     btf.addEventListenerPjax(window, 'scroll', tocScrollFn, { passive: true })
   }
 
+  const updateThemeControls = mode => {
+    const label = mode === 'dark' ? '切换至日间模式' : '切换至夜间模式'
+    document.querySelectorAll('#nav-theme-toggle, #darkmode').forEach(button => {
+      button.setAttribute('aria-label', label)
+      button.setAttribute('title', label)
+    })
+  }
+
   const handleThemeChange = mode => {
+    updateThemeControls(mode)
     const globalFn = window.globalFn || {}
     const themeChange = globalFn.themeChange || {}
     if (!themeChange) {
@@ -670,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btf.activateLightMode()
         GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
       }
-      btf.saveToLocal.set('theme', willChangeMode, 2)
+      btf.saveToLocal.set('theme', willChangeMode, 365)
       handleThemeChange(willChangeMode)
     },
     'rightside-config': item => { // Show or hide rightside-hide-btn
@@ -724,6 +733,9 @@ document.addEventListener('DOMContentLoaded', () => {
       rightSideFn[$target.id](e.currentTarget, $target)
     }
   })
+
+  document.getElementById('nav-theme-toggle')?.addEventListener('click', rightSideFn.darkmode)
+  updateThemeControls(document.documentElement.getAttribute('data-theme'))
 
   /**
    * menu

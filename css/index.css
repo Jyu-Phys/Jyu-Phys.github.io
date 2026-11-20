@@ -1,3 +1,46 @@
+/* Keep browser controls consistent with the selected site theme. */
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+[data-theme='light'] {
+  color-scheme: light;
+}
+#nav #nav-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  min-height: 44px;
+  margin-left: 14px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.2;
+  vertical-align: middle;
+  cursor: pointer;
+}
+#page-header.nav-fixed #nav #nav-theme-toggle,
+#page-header.not-top-img #nav #nav-theme-toggle {
+  border-color: var(--font-color);
+  background: var(--card-bg);
+  color: var(--font-color);
+}
+#nav #nav-theme-toggle:hover {
+  border-color: #49b1f5;
+  background: #1676ad;
+  color: #fff;
+}
+#nav #nav-theme-toggle:focus-visible {
+  outline: 3px solid #49b1f5;
+  outline-offset: 3px;
+}
+[data-theme='dark'] #nav-theme-toggle .theme-switch-night,
+[data-theme='light'] #nav-theme-toggle .theme-switch-day {
+  display: none;
+}
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 html {
   line-height: 1.15;
