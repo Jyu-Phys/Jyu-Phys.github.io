@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="三屏调色最终参数、Windows 基础曲线备份、登录自启与防掉色恢复说明。">
+<title>三屏调色与恢复存档 · Jyu</title>
+<style>
+:root{color-scheme:light;--bg:#f4f6f3;--ink:#17312e;--muted:#536964;--line:#dbe4df;--accent:#176c58;--soft:#e7f1eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+main{max-width:1080px;margin:auto;padding:38px 28px 70px}a{color:var(--accent);text-underline-offset:4px}nav{display:flex;justify-content:space-between;gap:20px;font-size:14px}
+header{padding:54px 0 34px}.eyebrow{letter-spacing:.13em;font-size:12px;font-weight:750;color:var(--accent)}h1{font-size:clamp(30px,5vw,52px);line-height:1.2;letter-spacing:-.04em;margin:14px 0 18px}
+.intro{font-size:18px;max-width:740px;color:var(--muted);margin:0}.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}.badge{background:var(--soft);border:1px solid #cfe1d6;border-radius:99px;padding:5px 12px;font-size:13px}.badge.neutral{background:#fff;border-color:var(--line)}
+section{margin-top:25px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 30px}h2{font-size:23px;margin:0 0 14px}p{margin:10px 0}.muted{color:var(--muted)}.small{font-size:14px}
+.setup{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.screens{display:grid;grid-template-columns:1.5fr .72fr;grid-template-rows:80px 80px;gap:9px;max-width:360px;margin:8px auto}
+.screen{display:flex;align-items:center;justify-content:center;flex-direction:column;border:2px solid #9fb5ab;border-radius:7px;background:#f4f8f5;font-size:14px}.screen strong{font-size:24px;line-height:1.25}.screen.ref{grid-area:1/1;background:#d8e9df;border-color:var(--accent)}.screen.two{grid-area:2/1}.screen.three{grid-area:1/2/3/3}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-variant-numeric:tabular-nums}th,td{text-align:left;border-bottom:1px solid var(--line);padding:15px 14px}th{font-size:13px;color:var(--muted);font-weight:650}tbody tr:last-child td{border:0}.triplet{font-family:ui-monospace,Consolas,monospace;font-weight:650;font-size:15px}.triplet span{color:#8a9c96;font-weight:400;padding:0 4px}
+.note{border-left:3px solid #8db99d;padding:9px 15px;background:#f4f8f5;border-radius:0 10px 10px 0;color:var(--muted);font-size:14px;margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.stat{background:#f4f8f5;border-radius:12px;padding:17px}.stat strong{font-size:27px;display:block;line-height:1.35}.stat span{font-size:13px;color:var(--muted)}
+ol,ul{padding-left:22px;margin:12px 0}li{margin:7px 0}code{font:14px ui-monospace,Consolas,monospace;background:#eff3ef;padding:3px 6px;border-radius:5px;overflow-wrap:anywhere}
+.downloads{display:flex;gap:12px;flex-wrap:wrap;margin:19px 0}.button{display:inline-block;padding:10px 16px;border:1px solid #cbdcd1;border-radius:10px;background:#f7faf7;text-decoration:none;font-size:14px}.button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.button:hover{filter:brightness(.95)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.action{border:1px solid var(--line);border-radius:12px;padding:15px}.action a{font-weight:650}.action p{margin:5px 0 0;font-size:14px;color:var(--muted)}footer{padding-top:25px;font-size:13px;color:var(--muted)}footer a{margin-right:14px}
+@media(max-width:700px){main{padding:24px 16px 45px}header{padding-top:38px}section{padding:22px 18px;border-radius:15px}.setup,.actions{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:23px}th,td{padding:13px 10px}.intro{font-size:16px}nav{font-size:12px}}
+</style>
+</head>
+<body><main>
+<nav><a href="/">← Jyu 的主页</a><span>设备配置存档 · 2026-11-23</span></nav>
+<header>
+<div class="eyebrow">DISPLAY COLOR / APPROVED PROFILE</div>
+<h1>三屏调色，保存这一版。</h1>
+<p class="intro">以笔记本内屏 1 为参照，为两块 ARZOPA 外接屏调整白平衡与亮度。当前采用 3 号 Gamma 1.20 的版本，并保存两层颜色恢复数据。</p>
+<div class="badges"><span class="badge">登录自启已启用</span><span class="badge">后台恢复实测通过</span><span class="badge neutral">未执行整机重启测试</span></div>
+</header>
+<section class="setup">
+<div><h2>这套屏幕的对应关系</h2><p><strong>1：</strong>上方笔记本内屏，作为参照。<br><strong>2：</strong>下方 ARZOPA 横屏。<br><strong>3：</strong>右侧 ARZOPA 竖屏。</p><p class="muted small">页面中的编号以用户界面为准。Windows 的 GDI 内部编号不同；恢复工具按硬件身份绑定两块外接屏。</p></div>
+<div class="screens" aria-label="1号在2号上方，3号在右侧竖放"><div class="screen ref"><strong>1</strong>参照内屏</div><div class="screen two"><strong>2</strong>ARZOPA 横屏</div><div class="screen three"><strong>3</strong>ARZOPA<br>竖屏</div></div>
+</section>
+<section>
+<h2>当前采用的参数</h2>
+<p class="muted small">所有三元组均依次为 R / G / B；亮度、对比度使用 NVIDIA App 的原始显示刻度。</p>
+<div class="table-wrap"><table><thead><tr><th>屏幕</th><th>亮度 R / G / B</th><th>对比度 R / G / B</th><th>Gamma R / G / B</th></tr></thead><tbody>
+<tr><td><strong>2 · 下方横屏</strong></td><td class="triplet">98<span>/</span>100<span>/</span>94</td><td class="triplet">96<span>/</span>100<span>/</span>88</td><td class="triplet">1.08<span>/</span>1.08<span>/</span>1.08</td></tr>
+<tr><td><strong>3 · 右侧竖屏</strong></td><td class="triplet">89<span>/</span>100<span>/</span>84</td><td class="triplet">84<span>/</span>100<span>/</span>84</td><td class="triplet">1.20<span>/</span>1.20<span>/</span>1.20</td></tr>
+</tbody></table></div>
+<p class="small">数字亮丽为 <strong>50%</strong>、色调为 <strong>0</strong>，两块外接屏机身背光由用户设为 <strong>100%</strong>。参照屏的参数保持原样。</p>
+<div class="note">该配置按这套设备的实屏观感匹配。公开 JSON 还保存各屏原有的 Windows 基础曲线；完整恢复需同时保留这层基线与 NVIDIA RGB/Gamma 调整。</div>
+</section>
+<section>
+<h2>开机自启与防掉色</h2>
+<p>当前用户登录任务 <code>Jyu_DisplayColorGuard</code> 已启用，并有一个无控制台窗口的守护进程运行。</p>
+<div class="stats"><div class="stat"><strong>15 秒</strong><span>登录后延迟启动</span></div><div class="stat"><strong>10 秒</strong><span>检查基础曲线与保存参数</span></div><div class="stat"><strong>60 秒</strong><span>NVIDIA 目标曲线兜底重应用</span></div></div>
+<ul><li>捕获两块外接屏的独立 EDID 身份；插拔后按身份匹配，避免编号变化套错配置。</li><li>保留 Windows 基础曲线，通过 NVIDIA 目标 Gamma 接口应用对应的 RGB 参数。</li><li>锁屏、检测到无边框全屏或启用高级颜色/HDR 时让出控制；恢复普通 SDR 桌面后继续检查。</li><li>修改配色前可暂停守护；停用时保留当前颜色和备份。</li></ul>
+<div class="note"><strong>已验证：</strong>本机编译、显示器绑定、恢复调用、基础曲线回读、参照屏未改变，以及守护进程主动恢复临时的曲线与注册表扰动。真实重启、睡眠唤醒和拔插场景尚未逐项触发测试。驱动更新后如接口不兼容，应查看状态文件并重新验证。</div>
+</section>
+<section>
+<h2>下次直接恢复</h2>
+<ol><li>优先使用本机备份目录中现存的 <code>display-color-approved.json</code> 与 <code>display-color-runtime.json</code>。</li><li>需要立即恢复时运行 <code>Restore-DisplayColor.cmd</code>；正常恢复沿用已保存的基线。</li><li>查看 <code>display-color-status.json</code> 的操作结果；更改配色前先运行暂停命令。</li><li>若本机快照丢失，从下方公开 JSON 读取参数及基础曲线，再核实本机硬件身份并重建绑定。</li></ol>
+<p class="muted small">“增强”是 NVIDIA 对当前颜色处理方式的状态说明。开启“覆盖参考模式”会绕过调色；恢复工具保持当前采用的调色参数。</p>
+<div class="downloads"><a class="button primary" href="display-color/profile.json" download>下载完整公开调色数据</a><a class="button" href="display-color/README.md">恢复说明 / 给下次助手</a><a class="button" href="display-color/DisplayColorGuard.cs" download>下载工具源码</a></div>
+<div class="actions">
+<div class="action"><a href="display-color/Enable-DisplayColorGuard.cmd" download>编译并启用自启</a><p>更新源码后重新编译，并注册本用户的登录任务。</p></div>
+<div class="action"><a href="display-color/Restore-DisplayColor.cmd" download>立即恢复当前版本</a><p>两块已绑定的 SDR 外接屏均连接时使用。</p></div>
+<div class="action"><a href="display-color/Pause-DisplayColorGuard.cmd" download>暂停守护</a> · <a href="display-color/Resume-DisplayColorGuard.cmd" download>恢复守护</a><p>重新调色前先暂停，避免旧版本被自动恢复。</p></div>
+<div class="action"><a href="display-color/Disable-DisplayColorGuard.cmd" download>停用开机守护</a><p>停止守护、移除其登录任务，保留配色和备份。</p></div>
+</div>
+<p class="muted small">源码与命令应和本机配置文件放在同一目录。公开资料不包含本机用户 SID、显示器序列号、设备绑定快照或运行日志。工具源码按 <a href="display-color/LICENSE.txt">GPL-3.0-or-later</a> 分发。</p>
+</section>
+<footer><p>参数与验证记录：2026-11-23。NVIDIA 目标曲线算法与接口协议参考 <a href="https://github.com/pbatard/nvBrightness">nvBrightness</a>，保留其授权与来源说明。</p><p><a href="https://www.nvidia.com/content/Control-Panel-Help/vLatest/en-us/mergedProjects/nvdsp/CS_Adjust_Color_Settings_Advanced.htm">NVIDIA 颜色模式说明</a><a href="https://learn.microsoft.com/windows/win32/api/wingdi/nf-wingdi-setdevicegammaramp">Windows 曲线接口限制</a><a href="https://github.com/Jyu-Phys/Jyu-Phys.github.io/tree/main/display-color">GitHub 资料目录</a></p></footer>
+</main></body>
+</html>
