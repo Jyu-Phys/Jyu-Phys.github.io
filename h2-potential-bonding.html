@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Jyu">
+  <meta name="description" content="从本地 Python 绘制的 H₂ 基态势能曲线出发，理解玻恩–奥本海默近似、两电子薛定谔方程、势阱与恢复力，并对照里德堡宏二聚体的长程成键。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="H₂ 势能曲线与分子成键 | 超快基础知识">
+  <meta property="og:description" content="势阱从哪里来，曲线斜率怎样决定力，H₂ 与里德堡宏二聚体为何在不同尺度成键。">
+  <meta property="og:url" content="https://jyu-phys.github.io/h2-potential-bonding.html">
+  <meta property="og:image" content="https://jyu-phys.github.io/img/ultrafast-basics/h2-ground-potential.png">
+  <meta property="article:published_time" content="2026-11-25T00:00:00+08:00">
+  <meta property="article:section" content="超快基础知识">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://jyu-phys.github.io/h2-potential-bonding.html">
+  <link rel="icon" href="/img/favicon.ico">
+  <title>H₂ 势能曲线与分子成键 | Jyu's cosmos</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#fff;--ink:#202c3b;--muted:#536277;--line:#d9e1eb;--accent:#205b9b;--soft:#f2f6fb;--paper:#fff;--warn:#ad493e}
+    @media(prefers-color-scheme:dark){:root{--bg:#101720;--ink:#e5edf7;--muted:#b2bfd0;--line:#334154;--accent:#9ac6ff;--soft:#182535;--paper:#18212c;--warn:#f0ab9d}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:2rem}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.85 system-ui,-apple-system,"Microsoft YaHei",sans-serif}
+    a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:.2em}a:hover{text-decoration-thickness:2px}a:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+    .topbar{max-width:1240px;margin:auto;padding:23px 30px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.brand{font-weight:650;text-decoration:none;color:var(--ink)}.toplinks{display:flex;gap:24px;font-size:16px}
+    .layout{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:55px;padding:55px 30px 80px}.toc{align-self:start;position:sticky;top:28px;font-size:16px}.toc strong{display:block;margin-bottom:14px;font-weight:600}.toc a{display:block;padding:7px 0;text-decoration:none;color:var(--muted)}.toc a:hover{color:var(--accent)}article{min-width:0}.eyebrow{font-size:15px;letter-spacing:.05em;color:var(--accent)}h1{font-size:clamp(30px,4.2vw,48px);line-height:1.3;letter-spacing:-.025em;margin:15px 0 22px;font-weight:650}.lead{font-size:20px;line-height:1.8;margin:0 0 18px}.meta{color:var(--muted);font-size:15px;margin-bottom:36px}h2{font-size:28px;line-height:1.4;margin:54px 0 18px;scroll-margin-top:2rem}h3{font-size:21px;margin:28px 0 12px}p{margin:14px 0}strong{font-weight:650}figure{margin:25px 0 28px}figure a{display:block}figure img{display:block;width:100%;height:auto;background:#fff}figcaption{color:var(--muted);font-size:15px;line-height:1.8;margin-top:13px}.note{padding:17px 21px;border-left:3px solid var(--accent);background:var(--soft);margin:25px 0}.note p{margin:0}.equation{overflow-x:auto;padding:24px 12px;margin:22px 0;background:var(--soft);font-size:1.12em}.equation math{min-width:max-content;margin:auto}math{font-family:"Cambria Math","STIX Two Math",serif}math[display="block"]{display:block;text-align:center}mi{font-style:italic}.table-wrap{overflow-x:auto;margin:22px 0}table{width:100%;border-collapse:collapse;font-size:16px;line-height:1.8}th,td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{font-weight:650;background:var(--soft)}td:first-child{white-space:nowrap}.source-list{padding-left:24px;font-size:16px}.source-list li{margin:15px 0}.formula-terms{margin:14px 0;padding-left:23px}.formula-terms li{margin:9px 0}.related{border-top:1px solid var(--line);padding-top:23px;margin-top:35px}.site-footer{max-width:1240px;margin:0 auto;padding:25px 30px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+    @media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr);gap:24px;padding-top:30px}.toc{position:static;display:flex;flex-wrap:wrap;gap:6px 20px;border-bottom:1px solid var(--line);padding-bottom:20px}.toc strong{width:100%;margin-bottom:3px}.toc a{padding:2px 0}h2{margin-top:40px}}
+    @media(max-width:540px){body{font-size:17px}.topbar{padding:18px 20px}.toplinks{gap:17px}.layout{padding:26px 20px 50px}.lead{font-size:18px}.equation{font-size:1em;padding:20px 10px}h2{font-size:25px}th,td{padding:11px 12px}.site-footer{padding:23px 20px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    @media print{.topbar,.toc,.site-footer{display:none}.layout{display:block;padding:0;max-width:none}body{font-size:11pt;background:white;color:black}article{max-width:none}h2{break-after:avoid}figure,table,.equation{break-inside:avoid}a{color:inherit}.equation,.note,th{background:#f6f6f6}.meta{margin-bottom:16px}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/">Jyu's cosmos</a><nav class="toplinks" aria-label="网站导航"><a href="/categories/超快基础知识/">超快基础知识</a><a href="/categories/">全部分类</a><a href="/">首页</a></nav></header>
+  <div class="layout">
+    <nav class="toc" aria-label="本文目录"><strong>本文内容</strong><a href="#curve">先读势能曲线</a><a href="#force">斜率与原子间力</a><a href="#theory">曲线的量子理论</a><a href="#vibration">势阱与核振动</a><a href="#macrodimer">对照里德堡宏二聚体</a><a href="#sources">数据与参考文献</a></nav>
+    <article>
+      <div class="eyebrow"><a href="/categories/超快基础知识/">超快基础知识</a> / 原子与分子</div>
+      <h1>H₂ 势能曲线与分子成键</h1>
+      <p class="lead">固定两个核的距离，求电子基态能量，再让核间距逐渐改变，就得到一条解释分子为什么能结合、怎样振动的势能曲线。</p>
+      <div class="meta">Jyu · 2026 年 11 月 25 日 · 玻恩–奥本海默近似与分子势阱</div>
+
+      <section id="curve">
+        <h2>先看一条干净的 H₂ 基态曲线</h2>
+        <p>横轴是核间距 <em>R</em>，纵轴是相对两个分离基态氢原子的能量 <em>U</em>。曲线在某个距离出现最低点，说明两个原子在这个距离附近结合，比完全分开具有更低的能量。</p>
+        <figure>
+          <a href="/img/ultrafast-basics/h2-ground-potential.png" aria-label="查看 H₂ 势能曲线原图"><img src="/img/ultrafast-basics/h2-ground-potential.png" width="1800" height="1120" alt="H₂ 基态势能曲线：左侧陡峭排斥，谷底在 0.07414 纳米、能量约负 4.75 电子伏，右侧逐渐趋近分离氢原子的零能量。"></a>
+          <figcaption>根据 Sims 与 Hagstrom 的非相对论 BO 能量数据绘制，含核间排斥。采用 48 个文献数据点做形状保持三次 Hermite 插值；曲线没有叠加振动能级和振动波函数。点击图片查看原图。<a href="#ref-sims">文献与数据来源</a></figcaption>
+        </figure>
+        <div class="table-wrap"><table><thead><tr><th scope="col">曲线上的位置</th><th scope="col">物理含义</th></tr></thead><tbody>
+          <tr><td>谷底 R₀ ≈ 0.07414 nm</td><td>平衡核间距，等于约 1.4011 个玻尔半径。</td></tr>
+          <tr><td>谷底 U ≈ −4.74773 eV</td><td>相对分离的 H(1s) + H(1s)，体系能量降低约 4.75 eV。</td></tr>
+          <tr><td>远距离 U → 0</td><td>两个原子逐渐分离，趋近选定的解离极限。</td></tr>
+        </tbody></table></div>
+        <p>这里的“势阱”就是势能曲线上的谷。论文图中额外画出的水平线通常是振动能级，放在这些能级高度上的波浪曲线通常是振动波函数；它们不属于势能曲线本身。</p>
+      </section>
+
+      <section id="force">
+        <h2>斜率决定吸引与排斥</h2>
+        <p>规定核间距增大的方向为正方向，则两个原子之间的径向有效力满足：</p>
+        <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="径向力 F R 等于势能对核间距导数的负值"><msub><mi>F</mi><mi>R</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mrow><mi mathvariant="normal">d</mi><mi>U</mi></mrow><mrow><mi mathvariant="normal">d</mi><mi>R</mi></mrow></mfrac></math></div>
+        <div class="table-wrap"><table><thead><tr><th scope="col">随 R 增大，U 的变化</th><th scope="col">力的方向</th><th scope="col">结果</th></tr></thead><tbody>
+          <tr><td>下降：dU/dR &lt; 0</td><td>F<sub>R</sub> &gt; 0，推向更大 R</td><td>排斥</td></tr>
+          <tr><td>上升：dU/dR &gt; 0</td><td>F<sub>R</sub> &lt; 0，拉向更小 R</td><td>吸引</td></tr>
+          <tr><td>水平：dU/dR = 0</td><td>净力为零</td><td>再看它是谷底还是峰顶</td></tr>
+        </tbody></table></div>
+        <p>在谷底附近，稍微拉远会受到吸引，稍微推近会受到排斥，因而存在恢复力。谷底满足 <em>U′(R₀) = 0</em>、<em>U″(R₀) &gt; 0</em>。能量越低不等于力越大，<strong>力的大小取决于曲线有多陡</strong>。</p>
+        <p>远距离的“长程”也不表示越远作用越强。例如，当范德华吸引势可写为 <em>U = −C₆/R⁶</em> 且 <em>C₆ &gt; 0</em> 时，吸引力大小是 <em>6C₆/R⁷</em>，会随距离快速减小。成键势阱附近则要使用完整曲线，不能把单一幂律套到所有距离。</p>
+      </section>
+
+      <section id="theory">
+        <h2>这条曲线由什么方程得到？</h2>
+        <p><strong>玻恩–奥本海默近似</strong>利用核比电子重、运动慢这一事实，先固定两个核的距离 <em>R</em>，求解电子问题。在原子单位制下，H₂ 的固定核哈密顿量是：</p>
+        <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="H等于两个电子动能，减去各电子到两个核距离倒数之和，加电子间排斥与核间排斥"><mi>H</mi><mo>(</mo><mi>R</mi><mo>)</mo><mo>=</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msubsup><mo>∇</mo><mn>1</mn><mn>2</mn></msubsup><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><msubsup><mo>∇</mo><mn>2</mn><mn>2</mn></msubsup><mo>−</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>2</mn></munderover><mrow><mo>(</mo><mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>A</mi></mrow></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>r</mi><mrow><mi>i</mi><mi>B</mi></mrow></msub></mfrac><mo>)</mo></mrow><mo>+</mo><mfrac><mn>1</mn><msub><mi>r</mi><mn>12</mn></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><mi>R</mi></mfrac></math></div>
+        <ul class="formula-terms"><li>两个 −½∇² 是电子动能；<em>r<sub>iA</sub></em>、<em>r<sub>iB</sub></em> 是电子 <em>i</em> 到两核的距离。</li><li>负的距离倒数项描述电子与两核的吸引。</li><li><em>1/r<sub>12</sub></em> 是电子间排斥，<em>1/R</em> 是核间排斥。</li></ul>
+        <p>对每个 <em>R</em> 求电子基态本征值：</p>
+        <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="固定核哈密顿量作用于电子基态，等于 BO 能量乘该态"><mi>H</mi><mo>(</mo><mi>R</mi><mo>)</mo><msub><mi>Ψ</mi><mi>R</mi></msub><mo>=</mo><msub><mi>E</mi><mrow><mi mathvariant="normal">BO</mi></mrow></msub><mo>(</mo><mi>R</mi><mo>)</mo><msub><mi>Ψ</mi><mi>R</mi></msub></math></div>
+        <p>再改变核间距，重复求解，就得到 <em>R ↦ E<sub>BO</sub>(R)</em>。<strong>这条核的有效势能曲线包含电子动能和电子间关联</strong>，需要由量子力学电子态计算得到。</p>
+        <h3>文献数值与这张图的关系</h3>
+        <p>Sims 与 Hagstrom 使用显式包含电子间距 <em>r<sub>12</sub></em> 的 Hylleraas 型变分展开，最多使用 7034 项。变分法把波函数写成基函数之和，再求广义本征值问题 <em>HC = ESC</em>，得到固定核基态能量。</p>
+        <p>本页曲线取自该论文 Table VI 的 47 个点，并加入 Table IV 的平衡点，共 48 点。绘图步骤是单位换算和 PCHIP 插值，没有重新执行电子结构计算，也没有把插值曲线当作独立的成键理论。</p>
+        <p>原子单位下，单个基态氢原子的能量为 −½ Hartree。把两个分离氢原子的能量设为零：</p>
+        <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="相对势能 U 等于 BO 能量减去两倍氢原子基态能量"><mi>U</mi><mo>(</mo><mi>R</mi><mo>)</mo><mo>=</mo><msub><mi>E</mi><mi mathvariant="normal">BO</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>−</mo><mn>2</mn><msub><mi>E</mi><mi mathvariant="normal">H</mi></msub><mo>=</mo><msub><mi>E</mi><mi mathvariant="normal">BO</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>+</mo><mn>1</mn><mspace width="0.4em"/><mtext>（Hartree）</mtext></math></div>
+        <p>数值换算采用 1 Hartree ≈ 27.211386 eV、1 玻尔半径 ≈ 0.05291772 nm。零点的整体平移不会改变曲线斜率，也不会改变力。</p>
+      </section>
+
+      <section id="vibration">
+        <h2>有一个谷，还要能容纳核的束缚态</h2>
+        <p>核也遵守量子力学。先忽略转动，在单条 BO 曲线上，核间径向振动满足：</p>
+        <div class="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="零转动核振动方程：负 hbar 平方除以二倍约化质量乘二阶径向导数，加势能，作用于振动径向函数等于振动能量乘该函数"><mrow><mo>[</mo><mo>−</mo><mfrac><msup><mi>ℏ</mi><mn>2</mn></msup><mrow><mn>2</mn><mi>μ</mi></mrow></mfrac><mfrac><msup><mi mathvariant="normal">d</mi><mn>2</mn></msup><mrow><mi mathvariant="normal">d</mi><msup><mi>R</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>U</mi><mo>(</mo><mi>R</mi><mo>)</mo><mo>]</mo></mrow><msub><mi>u</mi><mi>ν</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo><mo>=</mo><msub><mi>E</mi><mi>ν</mi></msub><msub><mi>u</mi><mi>ν</mi></msub><mo>(</mo><mi>R</mi><mo>)</mo></math></div>
+        <p><em>μ</em> 是两核的约化质量，<em>ν</em> 是振动量子数。势阱中允许的振动能量是离散的，最低振动态也高于谷底，因此核不会静止在一个精确距离上。</p>
+        <div class="note"><p><strong>井深 D<sub>e</sub> 与解离能 D<sub>0</sub>：</strong>H₂ 的电子势阱深度约为 4.75 eV；从最低振动态出发解离所需能量约为 4.48 eV。后者已经扣除了零点振动能。图上标的是 D<sub>e</sub>。</p></div>
+      </section>
+
+      <section id="macrodimer">
+        <h2>对照里德堡宏二聚体</h2>
+        <p>H₂ 与里德堡宏二聚体都可以用势能曲线描述核的束缚，但比较时需要明确电子态和距离。普通 H₂ 指电子基态；这里的铷宏二聚体则处于高度激发的里德堡分子态。</p>
+        <div class="table-wrap"><table><thead><tr><th scope="col">比较项</th><th scope="col">H₂ 电子基态</th><th scope="col">铷里德堡宏二聚体示例</th></tr></thead><tbody>
+          <tr><td>平衡距离</td><td>约 0.074 nm</td><td>Hollerith 等人的 35P 附近体系约 720 nm</td></tr>
+          <tr><td>轨道空间关系</td><td>两中心轨道明显重叠，形成共价电子态</td><td>两边原子轨道的空间重叠可以很小</td></tr>
+          <tr><td>势阱来源</td><td>电子整体成键态在短距离降低总能量</td><td>不同里德堡原子对态经长程多极作用耦合，避免交叉可形成远距离势阱</td></tr>
+          <tr><td>判断有效力</td><td colspan="2">对所选势能曲线取 −dU/dR；局部谷底附近存在恢复力</td></tr>
+        </tbody></table></div>
+        <p>多条电子态各有自己的势能曲线。宏二聚体论文中常把多条曲线、避免交叉、振动能级及波函数画在一起，所以图面复杂；势阱本身仍然是某条曲线上的局部谷。</p>
+        <p>成键方式并不由元素名称唯一决定。铷也能形成普通的短键 Rb₂；氢也有里德堡激发态。但某一组激发态能否支持宏二聚体，仍要检查其相互作用势和核的束缚态，不能仅凭“电子被激发”作出判断。参考文献中的长程宏二聚体是具体电子态、对称性和核间距共同决定的结果。</p>
+        <div class="related"><strong>继续阅读</strong><p><a href="/h2-matrix-guide.html">H₂ 基态的 4×4 矩阵求解</a>：从有限轨道基组理解矩阵元、能量与波函数。更完整的电子关联展开则用于本页所引用的高精度势能数据。</p></div>
+      </section>
+
+      <section id="sources">
+        <h2>数据与参考文献</h2>
+        <ol class="source-list">
+          <li id="ref-sims">J. S. Sims and S. A. Hagstrom, <em>High precision variational calculations for the Born-Oppenheimer energies of the ground state of the hydrogen molecule</em>, J. Chem. Phys. <strong>124</strong>, 094101 (2006). <a href="https://doi.org/10.1063/1.2173250">DOI</a> · <a href="https://www.nist.gov/system/files/documents/2017/05/09/sims-h2.pdf">NIST 原文 PDF</a>。本页 H₂ 曲线的数据来源为 Tables IV、VI。</li>
+          <li>S. Hollerith et al., <em>Quantum gas microscopy of Rydberg macrodimers</em>, Science <strong>364</strong>, 664–667 (2019). <a href="https://doi.org/10.1126/science.aaw4150">DOI</a> · <a href="https://arxiv.org/html/1812.07533v3">开放原文</a>。其中的势阱、避免交叉及振动态见原文图 1。</li>
+          <li>J. T. Stahovich et al., <em>Experimental study of the 3¹Δg and 4¹Δg states of the Rb₂ molecule</em>, Phys. Rev. A <strong>109</strong>, 012805 (2024). <a href="https://doi.org/10.1103/PhysRevA.109.012805">DOI</a>。实验从常规 Rb₂ 的 X¹Σg⁺ 基态出发，说明普通短键铷分子与里德堡宏二聚体是不同电子态体系。</li>
+        </ol>
+      </section>
+    </article>
+  </div>
+  <footer class="site-footer">Jyu's cosmos · <a href="/categories/超快基础知识/">超快基础知识</a> · 原子与分子物理笔记</footer>
+</body>
+</html>
