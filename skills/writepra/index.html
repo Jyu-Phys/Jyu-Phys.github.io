@@ -6,7 +6,6 @@
   <meta name="description" content="writepra：文献综述与物理研究论文的写作和审查技能。">
   <title>writepra · Skills | Jyu's cosmos</title>
   <link rel="stylesheet" href="/skills/style.css">
-  <style>input,button{font:inherit;border:1px solid #465873;border-radius:7px;padding:10px;background:#192334;color:#e9edf3}button{cursor:pointer;background:#9abcf5;color:#10141d;font-weight:700}form{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#181e2b;border:1px solid #303b4e;border-radius:10px;padding:20px;font:14px/1.8 ui-monospace,monospace}#status{color:#e6b2aa}</style>
 </head>
 <body>
   <header><nav aria-label="导航"><a class="brand" href="/">Jyu's cosmos</a><a href="/categories/skills/">Skills</a></nav></header>
@@ -14,10 +13,8 @@
     <p class="eyebrow"><a href="/categories/skills/">SKILLS</a> / WRITEPRA</p>
     <h1>物理论文写作 <span>writepra</span></h1>
     <p class="lead">核读原始研究、比较证据，组织文献综述与物理论文，检查物理问题、模型、观测量和结论是否一致。</p>
-    <form id="unlock"><input id="pass" type="password" autocomplete="current-password" aria-label="访问密码" placeholder="输入密码" required><button type="submit">解锁技能文件</button></form>
-    <p id="status" role="status"></p>
-    <div id="result" hidden><p>此页面提供技能主文件。配套指南和脚本未包含在此文件中。</p><div class="actions"><button id="download" type="button">下载 SKILL.md</button></div><pre id="content"></pre></div>
-    <section><h2>使用</h2><p>输入密码后，可查看并下载技能主文件。将文件放入 Codex 技能目录的 <code>writepra</code> 文件夹，在对话中使用 <code>$writepra</code>。</p><p>当前页面提供主文件，其中引用的配套指南和脚本未包含在内，相关功能需要对应文件才能完整使用。</p></section>
+    <p><a href="https://github.com/Jyu-Phys/writepra-private/blob/main/SKILL.md">登录 GitHub 查看技能文件 →</a></p>
+    <section><h2>使用</h2><p>使用有访问权限的 GitHub 账号登录后，可查看技能主文件。将文件放入 Codex 技能目录的 <code>writepra</code> 文件夹，在对话中使用 <code>$writepra</code>。</p><p>这里提供主文件，其中引用的配套指南和脚本未包含在内，相关功能需要对应文件才能完整使用。</p></section>
     <section><h2>适用范围</h2><ul>
       <li>独立文献综述、开题报告和学位论文综述部分。</li>
       <li>物理研究论文的摘要、引言、理论模型与计算方法、结果与讨论、结论和参考文献。</li>
@@ -31,15 +28,5 @@
     <section><h2>生成与验收</h2><p>按当前任务适用的执行位置和权限规则处理文件。交付前检查正文与图表、公式、引文和排版；未完成的检查应明确说明。</p></section>
   </main>
   <footer>Jyu's cosmos · <a href="/">返回首页</a></footer>
-  <script>
-'use strict';
-const $=id=>document.getElementById(id),from64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));let plaintext=null;
-$('unlock').addEventListener('submit',async event=>{event.preventDefault();$('status').textContent='正在解锁……';
- try{if(!crypto?.subtle)throw Error('浏览器不支持解密');const response=await fetch('./writepra.encrypted.json',{cache:'no-store'});if(!response.ok)throw Error('密文文件不可用');const data=await response.json();if(data.version!==1||data.algorithm!=='AES-256-GCM'||data.kdf!=='PBKDF2-SHA256'||data.iterations!==600000)throw Error('密文格式不受支持');
- const material=await crypto.subtle.importKey('raw',new TextEncoder().encode($('pass').value),'PBKDF2',false,['deriveKey']);const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:from64(data.salt),iterations:data.iterations,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);
- const result=await crypto.subtle.decrypt({name:'AES-GCM',iv:from64(data.iv)},key,from64(data.ciphertext));plaintext=new Uint8Array(result);$('content').textContent=new TextDecoder('utf-8',{fatal:true}).decode(plaintext);$('result').hidden=false;$('pass').value='';$('status').textContent='已在浏览器中解锁。';
- }catch(e){plaintext=null;$('result').hidden=true;$('status').textContent='解锁失败。请检查密码，或稍后重试。'}});
-$('download').addEventListener('click',()=>{if(!plaintext)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([plaintext],{type:'text/markdown;charset=utf-8'}));a.download='SKILL.md';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),30000)});
-  </script>
 </body>
 </html>
