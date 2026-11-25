@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Jyu"><meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Jyu 的物理笔记与研究工具：原子与分子、超快基础知识、强场动力学、数值复现及科研 Skills。">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jyu's cosmos · 物理笔记与研究工具">
+  <meta property="og:description" content="从基础概念到数值复现，整理原子分子物理与超快动力学。">
+  <meta property="og:url" content="https://jyu-phys.github.io/">
+  <meta property="og:image" content="https://jyu-phys.github.io/img/bg.png">
+  <link rel="canonical" href="https://jyu-phys.github.io/">
+  <link rel="icon" href="/img/favicon.ico">
+  <title>Jyu's cosmos · 物理笔记与研究工具</title>
+  <script>
+    (() => {
+      let mode;
+      try {
+        const stored = JSON.parse(localStorage.getItem('theme') || 'null');
+        if (stored && typeof stored === 'object' && stored.expiry > Date.now()) mode = stored.value;
+        else if (typeof stored === 'string') mode = stored;
+      } catch (_) {}
+      if (mode !== 'light' && mode !== 'dark') mode = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = mode;
+      document.querySelector('meta[name="theme-color"]').content = mode === 'dark' ? '#0e1622' : '#f5f7fb';
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/home-academic.css?v=20261125-1">
+  <script src="/js/home-academic.js?v=20261125-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content-inner">跳至文章列表</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="/" aria-label="Jyu's cosmos 首页"><span class="brand-mark" aria-hidden="true">J.</span><span>Jyu's cosmos</span></a>
+      <nav class="primary-nav" aria-label="主导航"><a href="/" aria-current="page">首页</a><a href="/categories/">分类</a><a href="/archives/">归档</a><a href="/tags/">标签</a></nav>
+      <div class="header-actions"><a class="github-top" href="https://github.com/Jyu-Phys" target="_blank" rel="noopener noreferrer">GitHub</a><button id="nav-theme-toggle" class="theme-toggle" type="button" aria-label="切换明暗主题" aria-pressed="false"><span class="theme-symbol" aria-hidden="true"></span><span id="theme-label">切换主题</span></button></div>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="left-rail" aria-label="个人信息与分类导航">
+      <div class="profile-block"><div class="profile-monogram" aria-hidden="true">J</div><h2>Jyu</h2><p>Ultrafast atomic &amp;<br>molecular physics</p><a class="profile-link" href="https://github.com/Jyu-Phys" target="_blank" rel="noopener noreferrer">@Jyu-Phys</a></div>
+      <div class="site-data"><a href="#content-inner"><span class="length-num">14</span><span class="headline">项内容</span></a><a href="/categories/"><span class="length-num">8</span><span class="headline">个分类</span></a></div>
+      <nav class="taxonomy" aria-label="内容分类"><div class="rail-heading"><h2>内容分类</h2><a href="/categories/">全部</a></div><ul class="card-category-list" id="aside-cat-list">
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/超快基础知识/"><span class="card-category-list-name">超快基础知识</span><span class="card-category-list-count">1</span></a></li>
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/强场物理/"><span class="card-category-list-name">强场物理</span><span class="card-category-list-count">1</span></a></li>
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/物理计算与模拟/"><span class="card-category-list-name">物理计算与模拟</span><span class="card-category-list-count">1</span></a></li>
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/科研笔记/"><span class="card-category-list-name">科研笔记</span><span class="card-category-list-count">4</span></a></li>
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/科研脚本/"><span class="card-category-list-name">科研脚本</span><span class="card-category-list-count">1</span></a></li>
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/物理学/"><span class="card-category-list-name">物理学</span><span class="card-category-list-count">1</span></a></li>
+        <li class="card-category-list-item child-category"><a class="card-category-list-link" href="/categories/物理学/论文解读/"><span class="card-category-list-name">论文解读</span><span class="card-category-list-count">1</span></a></li>
+        <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/skills/"><span class="card-category-list-name">Skills</span><span class="card-category-list-count">1</span></a></li>
+      </ul></nav>
+      <div class="rail-footer"><a href="/archives/">按时间浏览</a><a href="/tags/">按标签浏览</a></div>
+    </aside>
+
+    <main id="content-inner" class="main-feed">
+      <nav class="mobile-nav" aria-label="移动端导航"><a href="/categories/">全部分类</a><a href="/categories/超快基础知识/">超快基础</a><a href="/categories/skills/">Skills</a><a href="/archives/">文章归档</a><a href="/tags/">标签</a></nav>
+      <div class="section-intro"><p class="eyebrow">PHYSICS NOTEBOOK</p><h1>物理笔记与研究工具</h1><p class="section-description">原子与分子物理、超快动力学，以及从公式到计算的探索。</p></div>
+      <form class="search-form" role="search"><label for="content-search">搜索首页内容</label><div class="search-field"><input id="content-search" type="search" placeholder="搜索文章、主题或工具" autocomplete="off"><button type="button" id="clear-search" hidden>清除</button></div></form>
+      <div class="content-toolbar"><div class="content-filters" role="group" aria-label="按内容类型筛选"><button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">全部</button><button type="button" class="filter-button" data-filter="research" aria-pressed="false">物理笔记</button><button type="button" class="filter-button" data-filter="fundamentals" aria-pressed="false">基础知识</button><button type="button" class="filter-button" data-filter="skills" aria-pressed="false">Skills</button><button type="button" class="filter-button" data-filter="tools" aria-pressed="false">工具</button></div><p class="result-count" id="result-count" aria-live="polite">14 项内容</p></div>
+      <div class="recent-post-items">
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="fundamentals"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E8%B6%85%E5%BF%AB%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">超快基础知识</a></div><a class="article-title" href="/h2-potential-bonding.html" title="H₂ 势能曲线与分子成键">H₂ 势能曲线与分子成键</a><div class="content">从一张 H₂ 势能图出发，理解 BO 近似、两电子薛定谔方程、力与曲线斜率，并对照宏二聚体的成键机制。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-11-25">2026.11.25</time></span><span class="card-format">基础讲解</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="skills"><div class="card-topic"><a class="article-meta__categories" href="/categories/skills/">Skills</a></div><a class="article-title" href="/skills/translate/" title="translate：论文翻译技能">translate：论文翻译技能</a><div class="content">论文全文中文翻译、PDF 原版式排版与参考文献跳转。</div><div class="article-meta-wrap"><span class="post-meta-date"><span>专题内容</span></span><span class="card-format">可复用技能</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="tools"><div class="card-topic"><span>工具与归档</span></div><a class="article-title" href="/display-color-profile.html" title="三屏调色与恢复存档">三屏调色与恢复存档</a><div class="content">当前满意版 RGB/Gamma 参数、两屏 Windows 基础曲线，以及已验证的登录自启与防掉色恢复工具。</div><div class="article-meta-wrap"><span class="post-meta-date"><span>专题内容</span></span><span class="card-format">工具档案</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><span>原子与分子</span></div><a class="article-title" href="/macrodimer-tdse.html?v=2" title="宏二聚体两电子 TDSE 推导">宏二聚体两电子 TDSE 推导</a><div class="content">从铷原子的单电子轨道出发，构造宏二聚体初态，逐步推导两电子时间传播和联合动量分布。</div><div class="article-meta-wrap"><span class="post-meta-date"><span>专题内容</span></span><span class="card-format">专题推导</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><span>原子与分子</span></div><a class="article-title" href="/h2-matrix-guide.html" title="H₂ 基态的 4&#215;4 矩阵求解">H₂ 基态的 4&#215;4 矩阵求解</a><div class="content">用两中心 1s 基组逐格组装重叠矩阵和哈密顿矩阵，求出 H₂ 的基态能量和波函数。点选矩阵格子可查看公式与代入值。</div><div class="article-meta-wrap"><span class="post-meta-date"><span>专题内容</span></span><span class="card-format">交互讲解</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%89%A9%E7%90%86%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%A8%A1%E6%8B%9F/">物理计算与模拟</a></div><a class="article-title" href="/2026/04/03/SBE/" title="学习笔记：硅晶体中的激光偏振与电子动力学 (HHG)">学习笔记：硅晶体中的激光偏振与电子动力学 (HHG)</a><div class="content">从真实空间与倒空间出发，梳理硅晶体中的激光偏振、电子动力学与高次谐波响应。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-04-03">2026.04.03</time></span><span class="card-format">研究笔记</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E5%BC%BA%E5%9C%BA%E7%89%A9%E7%90%86/">强场物理</a></div><a class="article-title" href="/2026/03/30/2026-03-30-vampa-fig2-standard/" title="【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比">【论文复现】Vampa PRB 体晶 HHG Fig.2：带间与带内谐波的对比</a><div class="content">复现 ZnO 体晶 HHG 的带间与带内谐波谱，对照 Fig.2 分析两类机制的贡献。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-30">2026.03.30</time></span><span class="card-format">论文复现</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%89%A9%E7%90%86%E5%AD%A6/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">论文解读</a></div><a class="article-title" href="/2026/03/29/2026-03-29-reproduce-fig1b-oam-ionization/" title="公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)">公式逆向推导：OAM 强场电离中的角分辨电离产额 (Fig. 1b)</a><div class="content">围绕 Fig.1b 串联 LG 光场、原子初态、跃迁矩阵元与鞍点动力学，理解角分辨电离产额。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-29">2026.03.29</time></span><span class="card-format">公式推导</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/">科研笔记</a></div><a class="article-title" href="/2026/03/28/Octopus%E5%AE%9E%E6%88%98/" title="Octopus 实战：MPI并行策略与“对称性缩减Ace”">Octopus 实战：MPI并行策略与“对称性缩减Ace”</a><div class="content">整理 MPI 与 k 点并行、对称性缩减和资源分配，检查超算计算中容易忽略的效率问题。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-28">2026.03.28</time></span><span class="card-format">研究笔记</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/">科研笔记</a></div><a class="article-title" href="/2026/03/26/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A23/" title="硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;">硅的TDDFT高次谐波[3]：&quot;如何设置 Octopus 中的 ExtraStates？&quot;</a><div class="content">关于 Octopus 空态数量、ExtraStates 设置与收敛的学习整理。原文标有“正确性存疑”，相关内容仍需核实。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-26">2026.03.26</time></span><span class="card-format">待核实笔记</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/">科研笔记</a></div><a class="article-title" href="/2026/03/25/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A21/" title="硅的TDDFT高次谐波[1]：复现">硅的TDDFT高次谐波[1]：复现</a><div class="content">硅中 TDDFT 高次谐波的计算与复现笔记。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-25">2026.03.25</time></span><span class="card-format">计算复现</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="research"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%A7%91%E7%A0%94%E7%AC%94%E8%AE%B0/">科研笔记</a></div><a class="article-title" href="/2026/03/25/%E7%A1%85%E7%9A%84TDDFT%E9%AB%98%E6%AC%A1%E8%B0%90%E6%B3%A22/" title="硅的TDDFT高次谐波[2]：从基态inp到超算PBS与MATLAB数据处理全流程">硅的TDDFT高次谐波[2]：从基态inp到超算PBS与MATLAB数据处理全流程</a><div class="content">从基态输入文件到 PBS 任务提交，再到 MATLAB 后处理，整理硅中 TDDFT 高次谐波的计算流程。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-25">2026.03.25</time></span><span class="card-format">研究笔记</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="tools"><div class="card-topic"><a class="article-meta__categories" href="/categories/%E7%A7%91%E7%A0%94%E8%84%9A%E6%9C%AC/">科研脚本</a></div><a class="article-title" href="/2026/03/24/%E7%94%B5%E5%9C%BA%E5%88%86%E6%9E%90%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96MATLAB%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0%E5%BA%93/" title="电场分析与可视化MATLAB核心函数库">电场分析与可视化MATLAB核心函数库</a><div class="content">用于电场分析和数据可视化的 MATLAB 核心函数整理。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-24">2026.03.24</time></span><span class="card-format">科研脚本</span></div></div></div>
+        <div class="recent-post-item"><div class="recent-post-info no-cover" data-kind="tools"><div class="card-topic"><span>站点维护</span></div><a class="article-title" href="/2026/03/24/hello-world/" title="Hello World">Hello World</a><div class="content">Hexo 文章与站点维护的入门备忘录，记录创建文章、清理缓存与发布站点的常用操作。</div><div class="article-meta-wrap"><span class="post-meta-date"><time datetime="2026-03-24">2026.03.24</time></span><span class="card-format">站点维护</span></div></div></div>
+      </div>
+      <div class="empty-state" id="empty-state" hidden><h2>没有找到匹配的内容</h2><p>换一个关键词，或清除筛选后重新浏览。</p><button type="button" id="reset-filters">显示全部内容</button></div>
+      <div class="feed-footer"><span>更多历史记录</span><a href="/archives/">浏览文章归档</a></div>
+    </main>
+
+    <aside class="right-rail" aria-label="推荐阅读与常用入口">
+      <section class="rail-panel reading-panel"><div class="rail-heading"><h2>从这里开始</h2><span class="small-label">入门阅读</span></div><div class="reading-list"><a href="/h2-potential-bonding.html"><span class="reading-topic">看懂势阱与成键</span><strong>H₂ 势能曲线与分子成键</strong><span>从一张图理解电子态、原子间力与核振动。</span></a><a href="/h2-matrix-guide.html"><span class="reading-topic">从公式到矩阵</span><strong>H₂ 基态的 4×4 矩阵求解</strong><span>逐格理解重叠矩阵、哈密顿矩阵和本征态。</span></a><a href="/macrodimer-tdse.html?v=2"><span class="reading-topic">走向两电子动力学</span><strong>宏二聚体两电子 TDSE 推导</strong><span>从原子轨道出发，连接初态与时间传播。</span></a></div></section>
+      <section class="rail-panel"><div class="rail-heading"><h2>常用入口</h2></div><div class="resource-list"><a href="/categories/skills/"><strong>科研 Skills</strong><span>可复用的方法与工作流程</span></a><a href="/display-color-profile.html"><strong>三屏调色存档</strong><span>显示参数与恢复工具</span></a><a href="https://github.com/Jyu-Phys" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>Jyu-Phys 的代码与项目</span></a></div></section>
+      <section class="rail-panel topic-panel"><div class="rail-heading"><h2>常看主题</h2><a href="/tags/">全部标签</a></div><div class="topic-links"><a href="/tags/高次谐波/">HHG</a><a href="/tags/TDDFT/">TDDFT</a><a href="/tags/半导体-Bloch-方程/">SBE</a><a href="/tags/轨道角动量/">OAM</a><a href="/tags/Octopus/">Octopus</a><a href="/tags/MATLAB/">MATLAB</a></div><p class="about-note">记录物理直觉、公式推导与数值复现，让每一份笔记都能成为下一次探索的起点。</p></section>
+    </aside>
+  </div>
+  <footer class="site-footer"><span>© 2025–2026 Jyu · Jyu's cosmos</span><span>原子与分子 · 超快与强场 · 计算模拟</span><a href="https://github.com/Jyu-Phys" target="_blank" rel="noopener noreferrer">GitHub</a></footer>
+</body>
+</html>
